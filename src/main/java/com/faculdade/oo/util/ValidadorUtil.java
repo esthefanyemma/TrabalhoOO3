@@ -121,4 +121,154 @@ public class ValidadorUtil {
             throw new FormatoInvalidoException("CEP", "xxxxx-xxx");
         }
     }
+
+    // Valida formato de nome (apenas letras, espaços, acentos e alguns caracteres especiais)
+    public static void validarNome(String nome) throws CampoObrigatorioException, FormatoInvalidoException, TamanhoInvalidoException {
+        validarStringObrigatoria(nome, "nome");
+        validarTamanhoString(nome, "nome", 2, 100);
+        
+        if (!NOME_PATTERN.matcher(nome.trim()).matches()) {
+            throw new FormatoInvalidoException("nome", "apenas letras, espaços e acentos");
+        }
+    }
+
+    // Valida senha
+    public static void validarSenha(String senha) throws ValidacaoException {
+        validarStringObrigatoria(senha, "senha");
+        validarTamanhoString(senha, "senha", 6, 50);
+        
+        // Verificar se contém pelo menos uma letra e um número
+        boolean temLetra = senha.matches(".*[a-zA-Z].*");
+        boolean temNumero = senha.matches(".*[0-9].*");
+        
+        if (!temLetra || !temNumero) {
+            throw new FormatoInvalidoException("senha deve conter pelo menos uma letra e um número");
+        }
+    }
+
+    // Valida dados de usuário
+    public static void validarUsuario(Usuario usuario) throws ValidacaoException {
+        if (usuario == null) {
+            throw new CampoObrigatorioException("usuário");
+        }
+        
+        validarNome(usuario.getNome());
+        validarEmail(usuario.getEmail());
+        
+        if (usuario.getCpf() != null && !usuario.getCpf().trim().isEmpty()) {
+            validarCPF(usuario.getCpf());
+        }
+    }
+
+    // Valida dados de endereço
+    public static void validarEndereco(Endereco endereco) throws ValidacaoException {
+        if (endereco == null) {
+            throw new CampoObrigatorioException("endereço");
+        }
+        
+        validarStringObrigatoria(endereco.getRua(), "rua");
+        validarTamanhoString(endereco.getRua(), "rua", 5, 200);
+        
+        validarStringObrigatoria(endereco.getCidade(), "cidade");
+        validarNome(endereco.getCidade());
+        
+        validarStringObrigatoria(endereco.getEstado(), "estado");
+        validarTamanhoString(endereco.getEstado(), "estado", 2, 2);
+        
+        validarCEP(endereco.getCep());
+        
+        validarStringObrigatoria(endereco.getBairro(), "bairro");
+        validarTamanhoString(endereco.getBairro(), "bairro", 2, 50);
+    }
+
+    // Valida dados de franquia
+    public static void validarFranquia(Franquia franquia) throws ValidacaoException {
+        if (franquia == null) {
+            throw new CampoObrigatorioException("franquia");
+        }
+        
+        validarStringObrigatoria(franquia.getNome(), "nome da franquia");
+        validarTamanhoString(franquia.getNome(), "nome da franquia", 3, 100);
+        
+        validarEndereco(franquia.getEndereco());
+        
+        if (franquia.getGerenteId() <= 0) {
+            throw new FaixaInvalidaException("ID do gerente deve ser positivo");
+        }
+    }
+
+    // Valida dados de produto
+    public static void validarProduto(Produto produto) throws ValidacaoException {
+        if (produto == null) {
+            throw new CampoObrigatorioException("produto");
+        }
+        
+        validarStringObrigatoria(produto.getNome(), "nome do produto");
+        validarTamanhoString(produto.getNome(), "nome do produto", 2, 100);
+        
+        validarValorPositivo(produto.getPreco(), "preço");
+        validarFaixaNumerica(produto.getPreco(), "preço", 0.01, 99999.99);
+        
+        if (produto.getDescricao() != null && !produto.getDescricao().trim().isEmpty()) {
+            validarTamanhoString(produto.getDescricao(), "descrição", 1, 500);
+        }
+    }
+
+    // Valida dados de pedido
+    public static void validarPedido(Pedido pedido) throws ValidacaoException {
+        if (pedido == null) {
+            throw new CampoObrigatorioException("pedido");
+        }
+        
+        validarStringObrigatoria(pedido.getNomeCliente(), "nome do cliente");
+        validarNome(pedido.getNomeCliente());
+        
+        if (pedido.getTelefoneCliente() != null && !pedido.getTelefoneCliente().trim().isEmpty()) {
+            validarTelefone(pedido.getTelefoneCliente());
+        }
+        
+        if (pedido.getEmailCliente() != null && !pedido.getEmailCliente().trim().isEmpty()) {
+            validarEmail(pedido.getEmailCliente());
+        }
+        
+        validarValorPositivo(pedido.getValorTotal(), "valor total");
+        
+        if (pedido.getDataHora() == null) {
+            throw new CampoObrigatorioException("data/hora do pedido");
+        }
+        
+        // Verifica se a data não é muito antiga ou futura
+        LocalDateTime agora = LocalDateTime.now();
+        if (pedido.getDataHora().isAfter(agora.plusDays(1))) {
+            throw new FaixaInvalidaException("Data do pedido não pode ser mais de 1 dia no futuro");
+        }
+        
+        if (pedido.getDataHora().isBefore(agora.minusYears(1))) {
+            throw new FaixaInvalidaException("Data do pedido não pode ser mais de 1 ano no passado");
+        }
+        
+        if (pedido.getFormaPagamento() == null) {
+            throw new CampoObrigatorioException("forma de pagamento");
+        }
+        
+        if (pedido.getModoEntrega() == null) {
+            throw new CampoObrigatorioException("modo de entrega");
+        }
+        
+        if (pedido.getStatus() == null) {
+            throw new CampoObrigatorioException("status do pedido");
+        }
+    }
+
+    // Valida item de pedido
+    public static void validarItemPedido(int produtoId, int quantidade, double precoUnitario) throws ValidacaoException {
+        if (produtoId <= 0) {
+            throw new FaixaInvalidaException("ID do produto deve ser positivo");
+        }
+        
+        validarFaixaInteira(quantidade, "quantidade", 1, 999);
+        validarValorPositivo(precoUnitario, "preço unitário");
+    }
+
+    
 }
