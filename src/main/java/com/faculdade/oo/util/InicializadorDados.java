@@ -1,10 +1,7 @@
-package com.mycompany.trabalho03oo.util;
+package com.faculdade.oo.util;
 
-import com.mycompany.trabalho03oo.dao.*;
-import com.mycompany.trabalho03oo.model.*;
-
-
-@author 84398
+import com.faculdade.oo.dao.*;
+import com.faculdade.oo.model.*;
 
 public class InicializadorDados {
     
