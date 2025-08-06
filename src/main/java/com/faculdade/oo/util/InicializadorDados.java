@@ -209,3 +209,13 @@ public class InicializadorDados {
         
         System.out.println("Pedidos de exemplo criados!");
     }
+    //Remove todos os dados do sistema
+    public void limparDados() {
+        try {
+            // Implementar se necessário para testes
+            System.out.println("Funcionalidade de limpeza não implementada por segurança.");
+        } catch (Exception e) {
+            System.err.println("Erro ao limpar dados: " + e.getMessage());
+        }
+    }
+}
