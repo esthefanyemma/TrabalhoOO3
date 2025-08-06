@@ -1,0 +1,5 @@
+1;2024-01-15 10:30:00;4;1;João Silva Santos;11999887766;joao.santos@email.com;Rua das Flores, 123, , Centro, São Paulo, SP, 01234567;DINHEIRO;ENTREGA_DOMICILIO;PENDENTE;12740.0; 
+2;2024-01-16 11:45:00;4;1;Maria Oliveira Costa;11888776655;maria.costa@email.com;Av. Paulista, 1000, , Bela Vista, São Paulo, SP, 01310100;CARTAO_CREDITO;ENTREGA_DOMICILIO;CONFIRMADO;1500.0; 
+3;2024-01-17 14:20:00;6;2;Pedro Santos Lima;11777665544;pedro.lima@email.com;Rua Augusta, 500, , Consolação, São Paulo, SP, 01305000;PIX;RETIRADA;ENTREGUE;3800.0; 
+4;2024-01-18 09:15:00;5;1;Ana Carolina Silva;11666554433;ana.silva@email.com;Rua XV de Novembro, 789, , Centro, Campinas, SP, 13010000;CARTAO_DEBITO;ENTREGA_EXPRESSA;SAIU_PARA_ENTREGA;1440.0; 
+5;2024-01-19 16:30:00;6;2;Roberto Santos;11555443322;roberto@email.com;Av. Faria Lima, 2000, , Itaim Bibi, São Paulo, SP, 04538000;CARTAO_CREDITO;ENTREGA_DOMICILIO;CANCELADO;2200.0;  
