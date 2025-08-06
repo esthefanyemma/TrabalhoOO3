@@ -270,5 +270,58 @@ public class ValidadorUtil {
         validarValorPositivo(precoUnitario, "preço unitário");
     }
 
-    
+    // Valida se um pedido pode ter seus status alterados
+    public static void validarAlteracaoStatusPedido(StatusPedido statusAtual, StatusPedido novoStatus) 
+            throws EstadoInvalidoException {
+        if (statusAtual == null || novoStatus == null) {
+            throw new EstadoInvalidoException("Status atual e novo status são obrigatórios");
+        }
+        
+        switch (statusAtual) {
+            case PENDENTE:
+                if (novoStatus != StatusPedido.CONFIRMADO && novoStatus != StatusPedido.CANCELADO) {
+                    throw new EstadoInvalidoException("pedido", statusAtual.name(), "alterar para " + novoStatus.name());
+                }
+                break;
+                
+            case CONFIRMADO:
+                if (novoStatus != StatusPedido.SAIU_PARA_ENTREGA && novoStatus != StatusPedido.CANCELADO) {
+                    throw new EstadoInvalidoException("pedido", statusAtual.name(), "alterar para " + novoStatus.name());
+                }
+                break;
+                
+            case SAIU_PARA_ENTREGA:
+                if (novoStatus != StatusPedido.ENTREGUE) {
+                    throw new EstadoInvalidoException("pedido", statusAtual.name(), "alterar para " + novoStatus.name());
+                }
+                break;
+                
+            case ENTREGUE:
+            case CANCELADO:
+                throw new EstadoInvalidoException("pedido", statusAtual.name(), "alterar status");
+                
+            default:
+                throw new EstadoInvalidoException("Status de pedido desconhecido: " + statusAtual);
+        }
+    }
+
+    // Valida se os dígitos do CPF estão corretos
+    private static boolean validarDigitosCPF(String cpf) {
+        int soma = 0;
+        for (int i = 0; i < 9; i++) {
+            soma += Character.getNumericValue(cpf.charAt(i)) * (10 - i);
+        }
+        int primeiroDigito = 11 - (soma % 11);
+        if (primeiroDigito >= 10) primeiroDigito = 0;
+
+        soma = 0;
+        for (int i = 0; i < 10; i++) {
+            soma += Character.getNumericValue(cpf.charAt(i)) * (11 - i);
+        }
+        int segundoDigito = 11 - (soma % 11);
+        if (segundoDigito >= 10) segundoDigito = 0;
+
+        return Character.getNumericValue(cpf.charAt(9)) == primeiroDigito &&
+               Character.getNumericValue(cpf.charAt(10)) == segundoDigito;
+    }
 }
