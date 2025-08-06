@@ -1,4 +1,4 @@
-package com.faculdade.oo.view.swing;
+package com.faculdade.oo.view.swing.franquia;
 
 import com.faculdade.oo.controller.SistemaController;
 import com.faculdade.oo.model.Endereco;

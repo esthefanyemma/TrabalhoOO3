@@ -1,4 +1,4 @@
-package com.faculdade.oo.view.swing;
+package com.faculdade.oo.view.swing.gerente;
 
 import com.mycompany.trabalho03oo.controller.SistemaController;
 import com.mycompany.trabalho03oo.model.Gerente;

@@ -1,4 +1,4 @@
-package com.faculdade.oo.view.swing;
+package com.faculdade.oo.view.swing.gerente;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
