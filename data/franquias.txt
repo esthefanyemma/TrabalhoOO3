@@ -1,0 +1,2 @@
+1;Franquia Centro;Rua das Flores;100;;Centro;Juiz de Fora;MG;36000000;2;15000.0;25;
+2;Franquia Norte;Av. Brasil;500;Sala 10;Industrial;Juiz de Fora;MG;36100000;3;22000.0;40;
