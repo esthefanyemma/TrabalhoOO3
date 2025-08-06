@@ -1,0 +1,9 @@
+1;1;Notebook Dell Inspiron;5;2500.0
+1;2;Mouse Wireless Logitech;2;80.0
+2;3;Teclado Mecânico Gamer;2;350.0
+2;4;Monitor 24 Samsung;1;800.0
+3;6;Smartphone Samsung Galaxy;2;1800.0
+3;7;Fone Bluetooth JBL;1;200.0
+4;5;Impressora HP LaserJet;1;1200.0
+4;2;Mouse Wireless Logitech;3;80.0
+5;8;Tablet iPad Air;1;2200.0
