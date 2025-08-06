@@ -1,0 +1,10 @@
+1;Notebook Dell Inspiron;Notebook para uso profissional;2500.0;3;5;1
+2;Mouse Wireless Logitech;Mouse sem fio ergonômico;80.0;50;10;1
+3;Teclado Mecânico Gamer;Teclado com switches mecânicos;350.0;25;5;1
+4;Monitor 24 Samsung;Monitor Full HD 24 polegadas;800.0;20;3;1
+5;Impressora HP LaserJet;Impressora laser multifuncional;1200.0;8;2;1
+6;Smartphone Samsung Galaxy;Smartphone Android avançado;1800.0;30;5;2
+7;Fone Bluetooth JBL;Fone de ouvido sem fio premium;200.0;40;8;2
+8;Tablet iPad Air;Tablet para produtividade;2200.0;12;3;2
+9;Carregador Portátil Anker;Power bank 10000mAh;120.0;60;10;2
+10;Cabo USB-C Premium;Cabo de alta velocidade 2m;45.0;100;15;2
