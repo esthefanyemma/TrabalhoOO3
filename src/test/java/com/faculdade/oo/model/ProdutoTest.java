@@ -38,7 +38,7 @@ class ProdutoTest {
             assertEquals(28.50, prod.getPreco());
             assertEquals(30, prod.getQuantidadeEstoque());
             assertEquals(2, prod.getFranquiaId());
-            assertEquals(5, prod.getEstoqueMinimo()); // Valor padrão
+            assertEquals(5, prod.getEstoqueMinimo()); 
         }
         
         @Test
@@ -170,7 +170,7 @@ class ProdutoTest {
         @Test
         @DisplayName("Deve diminuir estoque corretamente")
         void testDiminuirEstoque_DeveDiminuirCorretamente() {
-            int estoqueInicial = produto.getQuantidadeEstoque(); // 50
+            int estoqueInicial = produto.getQuantidadeEstoque();
             
             produto.diminuirEstoque(10);
             
@@ -195,7 +195,7 @@ class ProdutoTest {
             
             IllegalArgumentException exception3 = assertThrows(
                 IllegalArgumentException.class,
-                () -> produto.diminuirEstoque(100) // estoque é 50
+                () -> produto.diminuirEstoque(100) 
             );
             assertNotNull(exception3.getMessage());
             assertEquals(IllegalArgumentException.class, exception3.getClass());
@@ -204,7 +204,7 @@ class ProdutoTest {
         @Test
         @DisplayName("Deve aumentar estoque corretamente")
         void testAumentarEstoque_DeveAumentarCorretamente() {
-            int estoqueInicial = produto.getQuantidadeEstoque(); // 50
+            int estoqueInicial = produto.getQuantidadeEstoque(); 
             
             produto.aumentarEstoque(20);
             
@@ -245,7 +245,7 @@ class ProdutoTest {
         @Test
         @DisplayName("Deve reduzir estoque corretamente")
         void testReduzirEstoque_DeveReduzirCorretamente() {
-            int estoqueInicial = produto.getQuantidadeEstoque(); // 50
+            int estoqueInicial = produto.getQuantidadeEstoque(); 
             
             assertDoesNotThrow(() -> produto.reduzirEstoque(15));
             
@@ -257,7 +257,7 @@ class ProdutoTest {
         void testReduzirEstoque_ComQuantidadeMaiorQueDisponivel_DeveLancarException() {
             IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> produto.reduzirEstoque(100) // estoque é 50
+                () -> produto.reduzirEstoque(100) 
             );
             
             assertNotNull(exception.getMessage());
@@ -290,7 +290,7 @@ class ProdutoTest {
         @Test
         @DisplayName("Deve mostrar alerta de estoque baixo no toString")
         void testToString_ComEstoqueBaixo() {
-            produto.setQuantidadeEstoque(3); // Abaixo do mínimo (5)
+            produto.setQuantidadeEstoque(3); 
             
             String resultado = produto.toString();
             
@@ -362,7 +362,7 @@ class ProdutoTest {
             produto.setQuantidadeEstoque(0);
             
             assertEquals(0, produto.getQuantidadeEstoque());
-            assertTrue(produto.isEstoqueBaixo()); // 0 <= 5
+            assertTrue(produto.isEstoqueBaixo()); 
             assertFalse(produto.temEstoqueDisponivel(1));
             assertTrue(produto.temEstoqueDisponivel(0));
         }
@@ -373,10 +373,10 @@ class ProdutoTest {
             produto.setEstoqueMinimo(0);
             produto.setQuantidadeEstoque(0);
             
-            assertTrue(produto.isEstoqueBaixo()); // 0 <= 0
+            assertTrue(produto.isEstoqueBaixo()); 
             
             produto.setQuantidadeEstoque(1);
-            assertFalse(produto.isEstoqueBaixo()); // 1 > 0
+            assertFalse(produto.isEstoqueBaixo()); 
         }
     }
 }

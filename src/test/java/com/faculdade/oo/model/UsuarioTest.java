@@ -180,7 +180,7 @@ class UsuarioTest {
             assertEquals("Maria Silva", gerente.getNome());
             assertEquals("maria@email.com", gerente.getEmail());
             assertEquals("98765432100", gerente.getCpf());
-            assertEquals(0, gerente.getFranquiaId()); // Default value
+            assertEquals(0, gerente.getFranquiaId()); 
         }
         
         @Test
