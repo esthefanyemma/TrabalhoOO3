@@ -30,27 +30,23 @@ public class CadastroProdutoDialog extends JDialog {
     }
     
     private void initializeComponents() {
-        // Configurar campos com melhor aparência
         txtNome = new JTextField(20);
         txtDescricao = new JTextField(30);
         txtPreco = new JTextField(10);
         txtQuantidadeEstoque = new JTextField(10);
         txtEstoqueMinimo = new JTextField(10);
         
-        // Botões simples
-        btnSalvar = new JButton("Salvar");
+=        btnSalvar = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
     }
     
     private void setupLayout() {
         setLayout(new BorderLayout());
         
-        // Panel principal com fundo branco e padding
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
         
-        // Formulário com GridBagLayout melhorado
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBackground(Color.WHITE);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -60,7 +56,6 @@ public class CadastroProdutoDialog extends JDialog {
         Font labelFont = new Font("Segoe UI", Font.PLAIN, 13);
         Color labelColor = new Color(70, 70, 70);
         
-        // Nome
         gbc.gridx = 0; gbc.gridy = 0;
         JLabel lblNome = new JLabel("Nome:*");
         lblNome.setFont(labelFont);
@@ -71,7 +66,6 @@ public class CadastroProdutoDialog extends JDialog {
         gbc.weightx = 1.0;
         panelFormulario.add(txtNome, gbc);
         
-        // Descrição
         gbc.gridx = 0; gbc.gridy = 1;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0;
@@ -84,7 +78,6 @@ public class CadastroProdutoDialog extends JDialog {
         gbc.weightx = 1.0;
         panelFormulario.add(txtDescricao, gbc);
         
-        // Preço
         gbc.gridx = 0; gbc.gridy = 2;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0;
@@ -97,7 +90,6 @@ public class CadastroProdutoDialog extends JDialog {
         gbc.weightx = 1.0;
         panelFormulario.add(txtPreco, gbc);
         
-        // Quantidade em Estoque
         gbc.gridx = 0; gbc.gridy = 3;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0;
@@ -110,7 +102,6 @@ public class CadastroProdutoDialog extends JDialog {
         gbc.weightx = 1.0;
         panelFormulario.add(txtQuantidadeEstoque, gbc);
         
-        // Estoque Mínimo
         gbc.gridx = 0; gbc.gridy = 4;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0;
@@ -123,7 +114,6 @@ public class CadastroProdutoDialog extends JDialog {
         gbc.weightx = 1.0;
         panelFormulario.add(txtEstoqueMinimo, gbc);
         
-        // Botões
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
         panelBotoes.setBackground(Color.WHITE);
         panelBotoes.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
@@ -135,7 +125,6 @@ public class CadastroProdutoDialog extends JDialog {
         
         add(mainPanel, BorderLayout.CENTER);
         
-        // Header com legenda
         JPanel panelHeader = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelHeader.setBackground(new Color(248, 249, 250));
         panelHeader.setBorder(BorderFactory.createCompoundBorder(
@@ -153,7 +142,6 @@ public class CadastroProdutoDialog extends JDialog {
         btnSalvar.addActionListener(e -> salvarProduto());
         btnCancelar.addActionListener(e -> dispose());
         
-        // Enter para salvar, Escape para cancelar
         getRootPane().setDefaultButton(btnSalvar);
         
         KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke("ESCAPE");
@@ -168,7 +156,6 @@ public class CadastroProdutoDialog extends JDialog {
     
     private void salvarProduto() {
         try {
-            // Validar campos
             String nome = txtNome.getText().trim();
             String descricao = txtDescricao.getText().trim();
             String precoStr = txtPreco.getText().trim();
@@ -223,7 +210,6 @@ public class CadastroProdutoDialog extends JDialog {
                 throw new IllegalArgumentException("Estoque mínimo deve ser um número inteiro");
             }
             
-            // Salvar produto
             sistemaController.cadastrarProduto(nome, descricao, preco, quantidadeEstoque, estoqueMinimo, franquiaId);
             
             JOptionPane.showMessageDialog(this, 

@@ -45,7 +45,6 @@ public class VendedorListPanel extends JPanel {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createTitledBorder("Vendedores da Franquia"));
         
-        // Criar tabela padrão
         String[] columnNames = {"ID", "Nome", "Email", "Total Vendas", "Qtd Vendas", "Ticket Médio"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -64,34 +63,29 @@ public class VendedorListPanel extends JPanel {
         table.getTableHeader().setForeground(new Color(52, 58, 64));
         table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(220, 220, 220)));
         
-        // Configurar larguras das colunas
-        table.getColumnModel().getColumn(0).setPreferredWidth(50);   // ID
-        table.getColumnModel().getColumn(1).setPreferredWidth(200); // Nome
-        table.getColumnModel().getColumn(2).setPreferredWidth(200); // Email
-        table.getColumnModel().getColumn(3).setPreferredWidth(120); // Total Vendas
-        table.getColumnModel().getColumn(4).setPreferredWidth(100); // Qtd Vendas
-        table.getColumnModel().getColumn(5).setPreferredWidth(120); // Ticket Médio
+        table.getColumnModel().getColumn(0).setPreferredWidth(50);   
+        table.getColumnModel().getColumn(1).setPreferredWidth(200); 
+        table.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table.getColumnModel().getColumn(3).setPreferredWidth(120);
+        table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        table.getColumnModel().getColumn(5).setPreferredWidth(120);
         
-        // Botões simples
         btnCadastrar = new JButton("Cadastrar");
         btnEditar = new JButton("Editar");
         btnRemover = new JButton("Remover");
         btnAtualizar = new JButton("Atualizar");
         
-        // Inicialmente desabilitar botões que dependem de seleção
         btnEditar.setEnabled(false);
         btnRemover.setEnabled(false);
     }
     
     private void setupLayout() {
-        // Panel superior com botões
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelBotoes.add(btnCadastrar);
         panelBotoes.add(btnEditar);
         panelBotoes.add(btnRemover);
         panelBotoes.add(btnAtualizar);
         
-        // Tabela com scroll
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(900, 450));
         scrollPane.setBorder(BorderFactory.createCompoundBorder(
@@ -105,7 +99,6 @@ public class VendedorListPanel extends JPanel {
     }
     
     private void setupListeners() {
-        // Listener para seleção da tabela
         table.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 boolean hasSelection = table.getSelectedRow() != -1;
@@ -114,7 +107,6 @@ public class VendedorListPanel extends JPanel {
             }
         });
         
-        // Listeners dos botões
         btnCadastrar.addActionListener(e -> cadastrarVendedor());
         btnEditar.addActionListener(e -> editarVendedor());
         btnRemover.addActionListener(e -> removerVendedor());
@@ -124,7 +116,6 @@ public class VendedorListPanel extends JPanel {
     private void cadastrarVendedor() {
         if (mainView != null) {
             mainView.mostrarCadastroVendedor();
-            // Atualizar lista após possível cadastro
             SwingUtilities.invokeLater(() -> loadData());
         } else {
             JOptionPane.showMessageDialog(this, "Função disponível apenas através do menu principal.");
@@ -142,7 +133,6 @@ public class VendedorListPanel extends JPanel {
         
         if (mainView != null) {
             mainView.mostrarEdicaoVendedor(vendedorId);
-            // Atualizar lista após possível edição
             SwingUtilities.invokeLater(() -> loadData());
         } else {
             JOptionPane.showMessageDialog(this, "Função disponível apenas através do menu principal.");
@@ -203,7 +193,6 @@ public class VendedorListPanel extends JPanel {
         }
     }
     
-    // Método público para recarregar dados (chamado após operações CRUD)
     public void atualizarLista() {
         loadData();
     }

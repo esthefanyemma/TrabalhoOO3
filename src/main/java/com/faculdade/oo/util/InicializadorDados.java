@@ -21,26 +21,22 @@ public class InicializadorDados {
         try {
             // Verificar se já existem dados
             if (!usuarioDAO.listarTodos().isEmpty()) {
-                return; // Já existem dados
+                return; 
             }
             
             System.out.println("Criando dados de exemplo...");
             
-            // Criar Dono
             Dono dono = new Dono(1, "João Silva", "123.456.789-00", "joao@franquia.com", "123456");
             usuarioDAO.salvar(dono);
             
-            // Criar Gerentes
             Gerente gerente1 = new Gerente(2, "Maria Santos", "987.654.321-00", "maria@franquia.com", "123456");
             Gerente gerente2 = new Gerente(3, "Pedro Costa", "111.222.333-44", "pedro@franquia.com", "123456");
             usuarioDAO.salvar(gerente1);
             usuarioDAO.salvar(gerente2);
             
-            // Criar Endereços
             Endereco endereco1 = new Endereco("Rua das Flores", "100", "Centro", "Juiz de Fora", "MG", "36010-000");
             Endereco endereco2 = new Endereco("Av. Brasil", "500", "Bairro Industrial", "Juiz de Fora", "MG", "36020-000");
             
-            // Criar Franquias
             Franquia franquia1 = new Franquia(1, "Franquia Centro", endereco1, 2);
             franquia1.setReceitaAcumulada(15000.0);
             franquia1.setTotalPedidos(150);
@@ -52,13 +48,11 @@ public class InicializadorDados {
             franquiaDAO.salvar(franquia1);
             franquiaDAO.salvar(franquia2);
             
-            // Atualizar gerentes com franquias
             gerente1.setFranquiaId(1);
             gerente2.setFranquiaId(2);
             usuarioDAO.atualizar(gerente1);
             usuarioDAO.atualizar(gerente2);
             
-            // Criar Vendedores
             Vendedor vendedor1 = new Vendedor(4, "Ana Oliveira", "555.666.777-88", "ana@franquia.com", "123456", 1);
             vendedor1.setTotalVendas(5000.0);
             vendedor1.setQuantidadeVendas(50);
@@ -75,7 +69,6 @@ public class InicializadorDados {
             usuarioDAO.salvar(vendedor2);
             usuarioDAO.salvar(vendedor3);
             
-            // Atualizar franquias com vendedores
             franquia1.adicionarVendedor(4);
             franquia1.adicionarVendedor(5);
             franquia2.adicionarVendedor(6);
@@ -93,10 +86,8 @@ public class InicializadorDados {
             System.out.println("VENDEDOR 3: lucia@franquia.com / 123456");
             System.out.println("========================");
             
-            // Criar produtos de exemplo
             criarProdutosExemplo();
             
-            // Criar pedidos de exemplo
             criarPedidosExemplo();
             
         } catch (Exception e) {
@@ -107,7 +98,6 @@ public class InicializadorDados {
     private void criarProdutosExemplo() throws Exception {
         System.out.println("Criando produtos de exemplo...");
         
-        // Produtos para Franquia 1
         Produto produto1 = new Produto(1, "Notebook Dell Inspiron", "Notebook para uso profissional", 2500.0, 15, 1);
         produto1.setEstoqueMinimo(5);
         produtoDAO.salvar(produto1);
@@ -128,7 +118,6 @@ public class InicializadorDados {
         produto5.setEstoqueMinimo(2);
         produtoDAO.salvar(produto5);
         
-        // Produtos para Franquia 2  
         Produto produto6 = new Produto(6, "Smartphone Samsung Galaxy", "Smartphone Android avançado", 1800.0, 30, 2);
         produto6.setEstoqueMinimo(5);
         produtoDAO.salvar(produto6);
@@ -155,7 +144,6 @@ public class InicializadorDados {
     private void criarPedidosExemplo() throws Exception {
         System.out.println("Criando pedidos de exemplo...");
         
-        // Pedido 1 - Franquia 1
         Pedido pedido1 = new Pedido(1, "João Silva Santos", 4, 1);
         pedido1.setEmailCliente("joao.santos@email.com");
         pedido1.setTelefoneCliente("11999887766");
@@ -165,7 +153,6 @@ public class InicializadorDados {
         pedido1.setStatus(StatusPedido.PENDENTE);
         pedidoDAO.salvar(pedido1);
         
-        // Pedido 2 - Franquia 1  
         Pedido pedido2 = new Pedido(2, "Maria Oliveira Costa", 4, 1);
         pedido2.setEmailCliente("maria.costa@email.com");
         pedido2.setTelefoneCliente("11888776655");
@@ -175,7 +162,6 @@ public class InicializadorDados {
         pedido2.setStatus(StatusPedido.CONFIRMADO);
         pedidoDAO.salvar(pedido2);
         
-        // Pedido 3 - Franquia 2
         Pedido pedido3 = new Pedido(3, "Pedro Santos Lima", 6, 2);
         pedido3.setEmailCliente("pedro.lima@email.com");
         pedido3.setTelefoneCliente("11777665544");
@@ -185,7 +171,6 @@ public class InicializadorDados {
         pedido3.setStatus(StatusPedido.ENTREGUE);
         pedidoDAO.salvar(pedido3);
         
-        // Pedido 4 - Franquia 1 (mais recente)
         Pedido pedido4 = new Pedido(4, "Ana Carolina Silva", 5, 1);
         pedido4.setEmailCliente("ana.silva@email.com");
         pedido4.setTelefoneCliente("11666554433");
@@ -195,7 +180,6 @@ public class InicializadorDados {
         pedido4.setStatus(StatusPedido.SAIU_PARA_ENTREGA);
         pedidoDAO.salvar(pedido4);
         
-        // Pedido 5 - Franquia 2 (cancelado)
         Pedido pedido5 = new Pedido(5, "Roberto Santos", 6, 2);
         pedido5.setEmailCliente("roberto@email.com");
         pedido5.setTelefoneCliente("11555443322");

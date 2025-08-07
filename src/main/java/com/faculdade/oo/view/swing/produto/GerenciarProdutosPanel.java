@@ -34,7 +34,6 @@ public class GerenciarProdutosPanel extends JPanel {
     public GerenciarProdutosPanel(SistemaController sistemaController) {
         this.sistemaController = sistemaController;
         
-        // Obter ID da franquia do gerente logado
         try {
             Franquia franquia = sistemaController.buscarFranquiaGerente();
             this.franquiaId = franquia != null ? franquia.getId() : 0;
@@ -57,7 +56,6 @@ public class GerenciarProdutosPanel extends JPanel {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createTitledBorder("Gerenciar Produtos"));
         
-        // Tabela simples
         String[] colunas = {"ID", "Nome", "Descrição", "Preço", "Estoque", "Est. Mín.", "Status"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
@@ -75,7 +73,6 @@ public class GerenciarProdutosPanel extends JPanel {
         tabelaProdutos.getTableHeader().setForeground(new Color(52, 58, 64));
         tabelaProdutos.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(220, 220, 220)));
         
-        // Botões simples
         btnCadastrar = new JButton("Cadastrar Produto");
         btnEditar = new JButton("Editar");
         btnRemover = new JButton("Remover");
@@ -84,19 +81,16 @@ public class GerenciarProdutosPanel extends JPanel {
         btnEditar.setEnabled(false);
         btnRemover.setEnabled(false);
         
-        // Listeners
         setupListeners();
     }
     
     private void setupLayout() {
-        // Panel superior com botões
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelBotoes.add(btnCadastrar);
         panelBotoes.add(btnEditar);
         panelBotoes.add(btnRemover);
         panelBotoes.add(btnAtualizar);
         
-        // Tabela com scroll melhorada
         JScrollPane scrollPane = new JScrollPane(tabelaProdutos);
         scrollPane.setPreferredSize(new Dimension(900, 450));
         scrollPane.setBorder(BorderFactory.createCompoundBorder(
@@ -141,7 +135,6 @@ public class GerenciarProdutosPanel extends JPanel {
                 modeloTabela.addRow(linha);
             }
             
-            // Destacar produtos com estoque baixo
             destacarEstoqueBaixo();
             
         } catch (Exception e) {
@@ -162,7 +155,7 @@ public class GerenciarProdutosPanel extends JPanel {
                 
                 String status = (String) table.getValueAt(row, 6);
                 if ("ESTOQUE BAIXO".equals(status)) {
-                    c.setBackground(new Color(255, 200, 200)); // Vermelho claro
+                    c.setBackground(new Color(255, 200, 200));
                 } else {
                     c.setBackground(Color.WHITE);
                 }
@@ -196,7 +189,6 @@ public class GerenciarProdutosPanel extends JPanel {
         int produtoId = (Integer) modeloTabela.getValueAt(linhaSelecionada, 0);
         
         try {
-            // Buscar produto completo
             List<Produto> produtos = sistemaController.listarProdutosPorFranquia(franquiaId);
             Produto produto = produtos.stream()
                     .filter(p -> p.getId() == produtoId)

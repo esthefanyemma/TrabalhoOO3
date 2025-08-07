@@ -37,7 +37,6 @@ public class MeusPedidosPanel extends JPanel {
             BorderFactory.createEmptyBorder(15, 15, 15, 15)
         ));
         
-        // Tabela com estilo melhorado
         String[] colunas = {"ID", "Cliente", "Data/Hora", "Status", "Valor Total", "Forma Pagamento", "Modo Entrega"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
@@ -55,7 +54,6 @@ public class MeusPedidosPanel extends JPanel {
         tabelaPedidos.setGridColor(new Color(230, 230, 230));
         tabelaPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        // Botões simples
         btnNovoPedido = new JButton("Novo Pedido");
         btnAdicionarItens = new JButton("Adicionar Itens");
         btnFinalizarPedido = new JButton("Finalizar Pedido");
@@ -64,12 +62,10 @@ public class MeusPedidosPanel extends JPanel {
         btnAdicionarItens.setEnabled(false);
         btnFinalizarPedido.setEnabled(false);
         
-        // Listeners
         setupListeners();
     }
     
     private void setupLayout() {
-        // Panel superior com botões
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panelBotoes.setBackground(Color.WHITE);
         panelBotoes.setBorder(BorderFactory.createEmptyBorder(5, 0, 10, 0));
@@ -78,7 +74,6 @@ public class MeusPedidosPanel extends JPanel {
         panelBotoes.add(btnFinalizarPedido);
         panelBotoes.add(btnAtualizar);
         
-        // Tabela com scroll melhorada
         JScrollPane scrollPane = new JScrollPane(tabelaPedidos);
         scrollPane.setPreferredSize(new Dimension(950, 450));
         scrollPane.setBorder(BorderFactory.createCompoundBorder(
@@ -90,7 +85,6 @@ public class MeusPedidosPanel extends JPanel {
         add(panelBotoes, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         
-        // Panel inferior com informações - mais elegante
         JPanel panelInfo = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelInfo.setBackground(new Color(248, 249, 250));
         panelInfo.setBorder(BorderFactory.createCompoundBorder(
@@ -142,7 +136,6 @@ public class MeusPedidosPanel extends JPanel {
                 modeloTabela.addRow(linha);
             }
             
-            // Destacar pedidos por status
             destacarPedidosPorStatus();
             
         } catch (Exception e) {
@@ -166,19 +159,19 @@ public class MeusPedidosPanel extends JPanel {
                 
                 switch (status) {
                     case "Pendente":
-                        backgroundColor = new Color(255, 255, 200); // Amarelo claro
+                        backgroundColor = new Color(255, 255, 200);
                         break;
                     case "Confirmado":
-                        backgroundColor = new Color(200, 255, 200); // Verde claro
+                        backgroundColor = new Color(200, 255, 200);
                         break;
                     case "Em Preparo":
-                        backgroundColor = new Color(200, 200, 255); // Azul claro
+                        backgroundColor = new Color(200, 200, 255);
                         break;
                     case "Entregue":
-                        backgroundColor = new Color(220, 220, 220); // Cinza claro
+                        backgroundColor = new Color(220, 220, 220);
                         break;
                     case "Cancelado":
-                        backgroundColor = new Color(255, 200, 200); // Vermelho claro
+                        backgroundColor = new Color(255, 200, 200);
                         break;
                 }
                 
@@ -203,7 +196,6 @@ public class MeusPedidosPanel extends JPanel {
         if (dialog.isPedidoCriado()) {
             carregarPedidos();
             
-            // Perguntar se quer adicionar itens imediatamente
             int opcao = JOptionPane.showConfirmDialog(
                 this,
                 "Pedido criado com sucesso! Deseja adicionar produtos agora?",
@@ -212,7 +204,6 @@ public class MeusPedidosPanel extends JPanel {
             );
             
             if (opcao == JOptionPane.YES_OPTION) {
-                // Selecionar o pedido recém-criado na tabela
                 int pedidoId = dialog.getPedidoId();
                 for (int i = 0; i < tabelaPedidos.getRowCount(); i++) {
                     if ((Integer) modeloTabela.getValueAt(i, 0) == pedidoId) {

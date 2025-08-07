@@ -24,7 +24,6 @@ public class GerenteListPanel extends JPanel {
         loadData();
     }
     
-    // Construtor para compatibilidade
     public GerenteListPanel(SistemaController sistemaController) {
         this(sistemaController, null);
     }
@@ -44,7 +43,6 @@ public class GerenteListPanel extends JPanel {
         table = new JTable(tableModel);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        // Botões de ação
         btnCadastrar = new JButton("Cadastrar Gerente");
         btnEditar = new JButton("Editar");
         btnRemover = new JButton("Remover");
@@ -57,14 +55,12 @@ public class GerenteListPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Panel superior com botões
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelBotoes.add(btnCadastrar);
         panelBotoes.add(btnEditar);
         panelBotoes.add(btnRemover);
         panelBotoes.add(btnAtualizar);
         
-        // Tabela com scroll
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(900, 450));
         scrollPane.setBorder(BorderFactory.createCompoundBorder(
@@ -76,7 +72,6 @@ public class GerenteListPanel extends JPanel {
         add(panelBotoes, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         
-        // Panel inferior com informações
         JPanel panelInfo = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelInfo.setBackground(new Color(248, 249, 250));
         panelInfo.setBorder(BorderFactory.createCompoundBorder(
@@ -92,7 +87,6 @@ public class GerenteListPanel extends JPanel {
     }
     
     private void setupListeners() {
-        // Listener para seleção da tabela
         table.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 boolean hasSelection = table.getSelectedRow() != -1;
@@ -101,7 +95,6 @@ public class GerenteListPanel extends JPanel {
             }
         });
         
-        // Listeners dos botões
         btnCadastrar.addActionListener(e -> cadastrarGerente());
         btnEditar.addActionListener(e -> editarGerente());
         btnRemover.addActionListener(e -> removerGerente());
@@ -158,7 +151,7 @@ public class GerenteListPanel extends JPanel {
                     "Gerente removido com sucesso!", 
                     "Sucesso", 
                     JOptionPane.INFORMATION_MESSAGE);
-                loadData(); // Recarregar lista
+                loadData(); 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, 
                     "Erro ao remover gerente: " + ex.getMessage(), 
@@ -192,7 +185,6 @@ public class GerenteListPanel extends JPanel {
         }
     }
     
-    // Método público para recarregar dados (chamado após operações CRUD)
     public void atualizarLista() {
         loadData();
     }

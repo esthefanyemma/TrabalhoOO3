@@ -17,7 +17,6 @@ public class EdicaoFranquiaDialog extends JDialog {
     private Franquia franquia;
     private boolean franquiaEditada = false;
     
-    // Campos do formulário
     private JTextField nomeField;
     private JTextField ruaField;
     private JTextField numeroField;
@@ -44,7 +43,6 @@ public class EdicaoFranquiaDialog extends JDialog {
         setLocationRelativeTo(getParent());
         setResizable(false);
         
-        // Campos do formulário
         nomeField = new JTextField(20);
         ruaField = new JTextField(20);
         numeroField = new JTextField(10);
@@ -66,55 +64,46 @@ public class EdicaoFranquiaDialog extends JDialog {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Nome
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Nome:"), gbc);
         gbc.gridx = 1;
         formPanel.add(nomeField, gbc);
         
-        // Rua
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Rua:"), gbc);
         gbc.gridx = 1;
         formPanel.add(ruaField, gbc);
         
-        // Número
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Número:"), gbc);
         gbc.gridx = 1;
         formPanel.add(numeroField, gbc);
         
-        // Complemento
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Complemento:"), gbc);
         gbc.gridx = 1;
         formPanel.add(complementoField, gbc);
         
-        // Bairro
         gbc.gridx = 0; gbc.gridy = 4;
         formPanel.add(new JLabel("Bairro:"), gbc);
         gbc.gridx = 1;
         formPanel.add(bairroField, gbc);
         
-        // Cidade
         gbc.gridx = 0; gbc.gridy = 5;
         formPanel.add(new JLabel("Cidade:"), gbc);
         gbc.gridx = 1;
         formPanel.add(cidadeField, gbc);
         
-        // Estado
         gbc.gridx = 0; gbc.gridy = 6;
         formPanel.add(new JLabel("Estado:"), gbc);
         gbc.gridx = 1;
         formPanel.add(estadoField, gbc);
         
-        // CEP
         gbc.gridx = 0; gbc.gridy = 7;
         formPanel.add(new JLabel("CEP:"), gbc);
         gbc.gridx = 1;
         formPanel.add(cepField, gbc);
         
-        // Gerente
         gbc.gridx = 0; gbc.gridy = 8;
         formPanel.add(new JLabel("Gerente:"), gbc);
         gbc.gridx = 1;
@@ -122,7 +111,6 @@ public class EdicaoFranquiaDialog extends JDialog {
         
         add(formPanel, BorderLayout.CENTER);
         
-        // Botões
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton salvarButton = new JButton("Salvar");
         JButton cancelarButton = new JButton("Cancelar");
@@ -134,7 +122,6 @@ public class EdicaoFranquiaDialog extends JDialog {
     }
     
     private void setupEventListeners() {
-        // Buscar os botões
         JPanel buttonPanel = (JPanel) getContentPane().getComponent(1);
         JButton salvarButton = (JButton) buttonPanel.getComponent(0);
         JButton cancelarButton = (JButton) buttonPanel.getComponent(1);
@@ -151,13 +138,11 @@ public class EdicaoFranquiaDialog extends JDialog {
             gerenteCombo.removeAllItems();
             gerenteCombo.addItem(new GerenteItem(null, "Selecione um gerente..."));
             
-            // Adicionar gerentes sem franquia
             for (Gerente gerente : gerentesSemFranquia) {
                 gerenteCombo.addItem(new GerenteItem(gerente, 
                     gerente.getNome() + " (ID: " + gerente.getId() + ")"));
             }
             
-            // Adicionar o gerente atual da franquia se existir
             Gerente gerenteAtual = todosGerentes.stream()
                 .filter(g -> g.getId() == franquia.getGerenteId())
                 .findFirst()
@@ -187,7 +172,6 @@ public class EdicaoFranquiaDialog extends JDialog {
         estadoField.setText(franquia.getEndereco().getEstado());
         cepField.setText(franquia.getEndereco().getCep());
         
-        // Selecionar o gerente atual
         for (int i = 0; i < gerenteCombo.getItemCount(); i++) {
             GerenteItem item = gerenteCombo.getItemAt(i);
             if (item.getGerente() != null && item.getGerente().getId() == franquia.getGerenteId()) {
@@ -199,7 +183,6 @@ public class EdicaoFranquiaDialog extends JDialog {
     
     private void salvarFranquia() {
         try {
-            // Validar campos obrigatórios
             if (!validarCampos()) {
                 return;
             }
@@ -282,7 +265,6 @@ public class EdicaoFranquiaDialog extends JDialog {
         return franquiaEditada;
     }
     
-    // Classe auxiliar para itens do combo de gerentes
     private static class GerenteItem {
         private Gerente gerente;
         private String displayText;

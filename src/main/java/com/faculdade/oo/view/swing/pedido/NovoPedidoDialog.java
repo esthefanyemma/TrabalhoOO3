@@ -29,7 +29,6 @@ public class NovoPedidoDialog extends JDialog {
     }
     
     private void initializeComponents() {
-        // Dados do cliente - campos maiores
         txtNomeCliente = new JTextField(30);
         txtNomeCliente.setPreferredSize(new Dimension(250, 25));
         
@@ -39,7 +38,6 @@ public class NovoPedidoDialog extends JDialog {
         txtEmailCliente = new JTextField(30);
         txtEmailCliente.setPreferredSize(new Dimension(250, 25));
         
-        // Endereço de entrega - campos maiores
         txtRua = new JTextField(35);
         txtRua.setPreferredSize(new Dimension(300, 25));
         
@@ -55,19 +53,16 @@ public class NovoPedidoDialog extends JDialog {
         txtCep = new JTextField(15);
         txtCep.setPreferredSize(new Dimension(120, 25));
         
-        // Opções do pedido - comboboxes maiores
         cbFormaPagamento = new JComboBox<>(FormaPagamento.values());
         cbFormaPagamento.setPreferredSize(new Dimension(200, 25));
         
         cbModoEntrega = new JComboBox<>(ModoEntrega.values());
         cbModoEntrega.setPreferredSize(new Dimension(200, 25));
         
-        // Área de texto maior
         txtObservacoes = new JTextArea(4, 40);
         txtObservacoes.setLineWrap(true);
         txtObservacoes.setWrapStyleWord(true);
         
-        // Botões
         btnCriar = new JButton("Criar Pedido");
         btnCancelar = new JButton("Cancelar");
     }
@@ -87,23 +82,19 @@ public class NovoPedidoDialog extends JDialog {
         
         gbc.gridwidth = 1;
         
-        // Dados do Cliente
         addFormField(mainPanel, gbc, 1, "Nome Cliente:*", txtNomeCliente);
         addFormField(mainPanel, gbc, 2, "Telefone:*", txtTelefoneCliente);
         addFormField(mainPanel, gbc, 3, "Email:*", txtEmailCliente);
         
-        // Endereço
         addFormField(mainPanel, gbc, 4, "Rua:*", txtRua);
         addFormField(mainPanel, gbc, 5, "Número:*", txtNumero);
         addFormField(mainPanel, gbc, 6, "Cidade:*", txtCidade);
         addFormField(mainPanel, gbc, 7, "Estado:*", txtEstado);
         addFormField(mainPanel, gbc, 8, "CEP:*", txtCep);
         
-        // Opções
         addFormField(mainPanel, gbc, 9, "Pagamento:*", cbFormaPagamento);
         addFormField(mainPanel, gbc, 10, "Entrega:*", cbModoEntrega);
         
-        // Observações
         gbc.gridx = 0; gbc.gridy = 11;
         gbc.fill = GridBagConstraints.NONE;
         mainPanel.add(new JLabel("Observações:"), gbc);
@@ -113,13 +104,11 @@ public class NovoPedidoDialog extends JDialog {
         
         add(mainPanel, BorderLayout.CENTER);
         
-        // Botões
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(btnCriar);
         buttonPanel.add(btnCancelar);
         add(buttonPanel, BorderLayout.SOUTH);
         
-        // Legenda
         JPanel panelLegenda = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelLegenda.add(new JLabel("* Campos obrigatórios"));
         add(panelLegenda, BorderLayout.NORTH);
@@ -162,17 +151,14 @@ public class NovoPedidoDialog extends JDialog {
             FormaPagamento formaPagamento = (FormaPagamento) cbFormaPagamento.getSelectedItem();
             ModoEntrega modoEntrega = (ModoEntrega) cbModoEntrega.getSelectedItem();
             
-            // Validações
             if (nomeCliente.isEmpty() || telefoneCliente.isEmpty() || emailCliente.isEmpty() ||
                 rua.isEmpty() || numero.isEmpty() || cidade.isEmpty() || estado.isEmpty() || cep.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos os campos obrigatórios devem ser preenchidos.");
                 return;
             }
             
-            // Criar endereço
             Endereco endereco = new Endereco(rua, numero, "", cidade, estado, cep);
             
-            // Criar pedido
             pedidoId = sistemaController.criarPedido(nomeCliente, telefoneCliente, emailCliente, 
                                                      endereco, formaPagamento, modoEntrega, observacoes);
             

@@ -16,7 +16,6 @@ public class CadastroVendedorDialog extends JDialog {
     private Vendedor vendedorEdicao;
     private boolean modoEdicao;
     
-    // Construtor para cadastro
     public CadastroVendedorDialog(Frame parent, SistemaController sistemaController) {
         super(parent, "Cadastrar Vendedor", true);
         this.sistemaController = sistemaController;
@@ -26,7 +25,6 @@ public class CadastroVendedorDialog extends JDialog {
         setupLayout();
     }
     
-    // Construtor para edição
     public CadastroVendedorDialog(Frame parent, SistemaController sistemaController, Vendedor vendedor) {
         super(parent, "Editar Vendedor", true);
         this.sistemaController = sistemaController;
@@ -84,9 +82,8 @@ public class CadastroVendedorDialog extends JDialog {
         if (vendedorEdicao != null) {
             nomeField.setText(vendedorEdicao.getNome());
             cpfField.setText(vendedorEdicao.getCpf());
-            cpfField.setEditable(false); // CPF não deve ser editável
+            cpfField.setEditable(false); 
             emailField.setText(vendedorEdicao.getEmail());
-            // Senha fica vazia por segurança - só altera se preencher
         }
     }
     
@@ -113,17 +110,13 @@ public class CadastroVendedorDialog extends JDialog {
             }
             
             if (modoEdicao) {
-                // Edição - senha é opcional
                 if (senha.isEmpty()) {
-                    // Manter senha atual
                     sistemaController.editarVendedor(vendedorEdicao.getId(), nome, cpf, email, null);
                 } else {
-                    // Alterar senha
                     sistemaController.editarVendedor(vendedorEdicao.getId(), nome, cpf, email, senha);
                 }
                 JOptionPane.showMessageDialog(this, "Vendedor editado com sucesso!");
             } else {
-                // Cadastro - senha é obrigatória
                 if (senha.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Senha é obrigatória para cadastro.");
                     return;

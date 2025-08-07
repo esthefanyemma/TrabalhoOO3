@@ -34,7 +34,6 @@ public class CadastroFranquiaDialog extends JDialog {
     private SistemaController sistemaController;
     private boolean franquiaCadastrada = false;
     
-    // Campos do formulário
     private JTextField nomeField;
     private JTextField ruaField;
     private JTextField numeroField;
@@ -59,7 +58,6 @@ public class CadastroFranquiaDialog extends JDialog {
         setLocationRelativeTo(getParent());
         setResizable(false);
         
-        // Campos do formulário
         nomeField = new JTextField(20);
         ruaField = new JTextField(20);
         numeroField = new JTextField(10);
@@ -75,7 +73,6 @@ public class CadastroFranquiaDialog extends JDialog {
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.WHITE);
         
-        // Header com gradiente
         JPanel headerPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -100,7 +97,6 @@ public class CadastroFranquiaDialog extends JDialog {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
         
-        // Painel principal com formulário
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(25, 25, 20, 25));
@@ -108,13 +104,11 @@ public class CadastroFranquiaDialog extends JDialog {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Campos do formulário
         gbc.gridwidth = 1;
         gbc.fill = GridBagConstraints.NONE;
         
         addFormField(mainPanel, gbc, 2, "Nome da Franquia:", nomeField);
         
-        // Seção de endereço
         JLabel enderecoLabel = new JLabel("Endereço:");
         enderecoLabel.setFont(new Font("Arial", Font.BOLD, 12));
         gbc.gridx = 0; gbc.gridy = 3;
@@ -133,7 +127,6 @@ public class CadastroFranquiaDialog extends JDialog {
         
         add(mainPanel, BorderLayout.CENTER);
         
-        // Painel de botões
         JPanel buttonPanel = new JPanel(new FlowLayout());
         
         JButton salvarButton = new JButton("Salvar");
@@ -160,9 +153,8 @@ public class CadastroFranquiaDialog extends JDialog {
     }
     
     private void setupEventListeners() {
-        // Limitar campos de texto
-        estadoField.setDocument(new LimitedDocument(2)); // Máximo 2 caracteres para estado
-        cepField.setDocument(new LimitedDocument(9)); // CEP com máscara
+        estadoField.setDocument(new LimitedDocument(2)); 
+        cepField.setDocument(new LimitedDocument(9));
         numeroField.setDocument(new LimitedDocument(10));
     }
     
@@ -184,7 +176,7 @@ public class CadastroFranquiaDialog extends JDialog {
                     "Cadastre um gerente primeiro.</html>",
                     "Nenhum Gerente Disponível",
                     JOptionPane.WARNING_MESSAGE);
-                dispose(); // Fechar o diálogo quando não há gerentes
+                dispose(); 
             }
             
         } catch (Exception e) {
@@ -192,18 +184,16 @@ public class CadastroFranquiaDialog extends JDialog {
                 "Erro ao carregar gerentes: " + e.getMessage(),
                 "Erro",
                 JOptionPane.ERROR_MESSAGE);
-            dispose(); // Fechar o diálogo em caso de erro
+            dispose(); 
         }
     }
     
     private void salvarFranquia() {
         try {
-            // Validar campos obrigatórios
             if (!validarCampos()) {
                 return;
             }
             
-            // Obter dados do formulário
             String nome = nomeField.getText().trim();
             String rua = ruaField.getText().trim();
             String numero = numeroField.getText().trim();
@@ -223,11 +213,9 @@ public class CadastroFranquiaDialog extends JDialog {
                 return;
             }
             
-            // Criar endereço
             Endereco endereco = new Endereco(rua, numero, complemento.isEmpty() ? null : complemento, 
                                            bairro, cidade, estado, cep);
             
-            // Salvar franquia
             sistemaController.cadastrarFranquia(nome, endereco, gerenteItem.getGerente().getId());
             
             JOptionPane.showMessageDialog(this,

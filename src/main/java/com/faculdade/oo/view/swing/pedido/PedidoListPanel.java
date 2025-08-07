@@ -46,7 +46,6 @@ public class PedidoListPanel extends JPanel {
         tabelaPedidos.getTableHeader().setForeground(new Color(52, 58, 64));
         tabelaPedidos.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(220, 220, 220)));
         
-        // Configurar larguras das colunas
         tabelaPedidos.getColumnModel().getColumn(0).setMaxWidth(50);   // ID
         tabelaPedidos.getColumnModel().getColumn(1).setPreferredWidth(150); // Cliente
         tabelaPedidos.getColumnModel().getColumn(2).setPreferredWidth(120); // Telefone
@@ -56,16 +55,13 @@ public class PedidoListPanel extends JPanel {
         tabelaPedidos.getColumnModel().getColumn(6).setPreferredWidth(120); // Forma Pagamento
         tabelaPedidos.getColumnModel().getColumn(7).setPreferredWidth(120); // Modo Entrega
         
-        // Botão
         btnAtualizar = new JButton("Atualizar");
     }
     
     private void setupLayout() {
-        // Panel superior com botões
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelBotoes.add(btnAtualizar);
         
-        // Tabela com scroll
         JScrollPane scrollPane = new JScrollPane(tabelaPedidos);
         scrollPane.setPreferredSize(new Dimension(900, 450));
         scrollPane.setBorder(BorderFactory.createCompoundBorder(
@@ -111,7 +107,6 @@ public class PedidoListPanel extends JPanel {
                 modeloTabela.addRow(linha);
             }
             
-            // Destacar pedidos por status
             destacarPedidosPorStatus();
             
         } catch (Exception e) {
@@ -130,33 +125,33 @@ public class PedidoListPanel extends JPanel {
                 
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 
-                String status = (String) table.getValueAt(row, 4); // Coluna do status
+                String status = (String) table.getValueAt(row, 4);
                 Color backgroundColor = Color.WHITE;
                 
                 switch (status) {
                     case "PENDENTE":
                     case "Pendente":
-                        backgroundColor = new Color(255, 255, 200); // Amarelo claro
+                        backgroundColor = new Color(255, 255, 200);
                         break;
                     case "CONFIRMADO":
                     case "Confirmado":
-                        backgroundColor = new Color(200, 255, 200); // Verde claro
+                        backgroundColor = new Color(200, 255, 200);
                         break;
                     case "EM_PREPARO":
                     case "Em Preparo":
-                        backgroundColor = new Color(200, 200, 255); // Azul claro
+                        backgroundColor = new Color(200, 200, 255);
                         break;
                     case "SAIU_PARA_ENTREGA":
                     case "Saiu para Entrega":
-                        backgroundColor = new Color(255, 200, 255); // Rosa claro
+                        backgroundColor = new Color(255, 200, 255);
                         break;
                     case "ENTREGUE":
                     case "Entregue":
-                        backgroundColor = new Color(220, 220, 220); // Cinza claro
+                        backgroundColor = new Color(220, 220, 220);
                         break;
                     case "CANCELADO":
                     case "Cancelado":
-                        backgroundColor = new Color(255, 200, 200); // Vermelho claro
+                        backgroundColor = new Color(255, 200, 200);
                         break;
                 }
                 
@@ -171,7 +166,6 @@ public class PedidoListPanel extends JPanel {
         });
     }
     
-    // Método público para recarregar dados (chamado após operações CRUD)
     public void atualizarLista() {
         carregarPedidos();
     }

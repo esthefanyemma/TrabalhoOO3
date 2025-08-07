@@ -80,7 +80,6 @@ public class CadastroGerenteDialog extends JDialog {
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.WHITE);
         
-        // Header com gradiente
         JPanel headerPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -105,7 +104,6 @@ public class CadastroGerenteDialog extends JDialog {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
         
-        // Main panel com formulário
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(25, 25, 20, 25));
@@ -118,7 +116,6 @@ public class CadastroGerenteDialog extends JDialog {
         addStyledFormField(mainPanel, gbc, 2, "Email:", emailField);
         addStyledFormField(mainPanel, gbc, 3, "Senha:", senhaField);
         
-        // Botões estilizados
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 15));
         buttonPanel.setBackground(Color.WHITE);
         

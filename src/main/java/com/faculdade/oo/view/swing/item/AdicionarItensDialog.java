@@ -29,7 +29,6 @@ public class AdicionarItensDialog extends JDialog {
         this.pedidoId = pedidoId;
         this.nomeCliente = nomeCliente;
         
-        // Obter ID da franquia do vendedor
         Vendedor vendedor = (Vendedor) sistemaController.getAuthController().getUsuarioLogado();
         this.franquiaId = vendedor.getFranquiaId();
         
@@ -43,11 +42,9 @@ public class AdicionarItensDialog extends JDialog {
     }
     
     private void initializeComponents() {
-        // Info do pedido
         lblPedidoInfo = new JLabel("Pedido #" + pedidoId + " - Cliente: " + nomeCliente);
         lblPedidoInfo.setFont(new Font("Arial", Font.BOLD, 14));
         
-        // Tabela de produtos
         String[] colunas = {"ID", "Nome", "Descrição", "Preço", "Estoque"};
         modeloProdutos = new DefaultTableModel(colunas, 0) {
             @Override
@@ -59,17 +56,14 @@ public class AdicionarItensDialog extends JDialog {
         tabelaProdutos = new JTable(modeloProdutos);
         tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        // Configurar larguras das colunas
-        tabelaProdutos.getColumnModel().getColumn(0).setMaxWidth(50);  // ID
-        tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(150); // Nome
-        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(200); // Descrição
-        tabelaProdutos.getColumnModel().getColumn(3).setMaxWidth(80);  // Preço
-        tabelaProdutos.getColumnModel().getColumn(4).setMaxWidth(70);  // Estoque
+        tabelaProdutos.getColumnModel().getColumn(0).setMaxWidth(50); 
+        tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(150); 
+        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tabelaProdutos.getColumnModel().getColumn(3).setMaxWidth(80);  
+        tabelaProdutos.getColumnModel().getColumn(4).setMaxWidth(70);
         
-        // Spinner para quantidade
         spinnerQuantidade = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
         
-        // Botões
         btnAdicionar = new JButton("Adicionar Item");
         btnFechar = new JButton("Fechar");
     }
@@ -77,17 +71,14 @@ public class AdicionarItensDialog extends JDialog {
     private void setupLayout() {
         setLayout(new BorderLayout());
         
-        // Panel superior com info do pedido
         JPanel panelInfo = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelInfo.setBorder(BorderFactory.createEtchedBorder());
         panelInfo.add(lblPedidoInfo);
         add(panelInfo, BorderLayout.NORTH);
         
-        // Panel central com tabela
         JScrollPane scrollPane = new JScrollPane(tabelaProdutos);
         add(scrollPane, BorderLayout.CENTER);
         
-        // Panel inferior com controles
         JPanel panelControles = new JPanel(new FlowLayout());
         panelControles.add(new JLabel("Quantidade:"));
         panelControles.add(spinnerQuantidade);
@@ -100,7 +91,6 @@ public class AdicionarItensDialog extends JDialog {
         btnAdicionar.addActionListener(e -> adicionarItem());
         btnFechar.addActionListener(e -> dispose());
         
-        // Duplo clique para adicionar
         tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
@@ -160,7 +150,7 @@ public class AdicionarItensDialog extends JDialog {
                 "Item adicionado ao pedido com sucesso!");
             
             itensAdicionados = true;
-            carregarProdutos(); // Recarregar para mostrar estoque atualizado
+            carregarProdutos();
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 

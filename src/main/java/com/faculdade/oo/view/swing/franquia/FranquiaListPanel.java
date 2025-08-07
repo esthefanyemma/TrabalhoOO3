@@ -24,7 +24,6 @@ public class FranquiaListPanel extends JPanel {
         loadData();
     }
     
-    // Construtor para compatibilidade
     public FranquiaListPanel(SistemaController sistemaController) {
         this(sistemaController, null);
     }
@@ -45,13 +44,11 @@ public class FranquiaListPanel extends JPanel {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(220, 220, 220)));
         
-        // Configurar larguras das colunas
-        table.getColumnModel().getColumn(0).setPreferredWidth(50);  // ID
-        table.getColumnModel().getColumn(1).setPreferredWidth(150); // Nome
-        table.getColumnModel().getColumn(2).setPreferredWidth(100); // Cidade
-        table.getColumnModel().getColumn(3).setPreferredWidth(50);  // Estado
+        table.getColumnModel().getColumn(0).setPreferredWidth(50); 
+        table.getColumnModel().getColumn(1).setPreferredWidth(150);
+        table.getColumnModel().getColumn(2).setPreferredWidth(100);
+        table.getColumnModel().getColumn(3).setPreferredWidth(50); 
         
-        // Botões de ação
         btnCadastrar = new JButton("Cadastrar Franquia");
         btnEditar = new JButton("Editar");
         btnRemover = new JButton("Remover");
@@ -64,14 +61,12 @@ public class FranquiaListPanel extends JPanel {
     }
     
     private void setupLayout() {
-        // Panel superior com botões
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelBotoes.add(btnCadastrar);
         panelBotoes.add(btnEditar);
         panelBotoes.add(btnRemover);
         panelBotoes.add(btnAtualizar);
         
-        // Tabela com scroll
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(900, 450));
         scrollPane.setBorder(BorderFactory.createCompoundBorder(
@@ -83,7 +78,6 @@ public class FranquiaListPanel extends JPanel {
         add(panelBotoes, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         
-        // Panel inferior com informações
         JPanel panelInfo = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelInfo.setBackground(new Color(248, 249, 250));
         panelInfo.setBorder(BorderFactory.createCompoundBorder(
@@ -163,7 +157,7 @@ public class FranquiaListPanel extends JPanel {
                     "Franquia removida com sucesso!", 
                     "Sucesso", 
                     JOptionPane.INFORMATION_MESSAGE);
-                loadData(); // Recarregar lista
+                loadData(); 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, 
                     "Erro ao remover franquia: " + ex.getMessage(), 
@@ -177,10 +171,8 @@ public class FranquiaListPanel extends JPanel {
         try {
             List<Franquia> franquias = sistemaController.listarFranquias();
             
-            // Limpar tabela
             tableModel.setRowCount(0);
             
-            // Adicionar dados
             for (Franquia franquia : franquias) {
                 Object[] row = {
                     franquia.getId(),
@@ -195,7 +187,6 @@ public class FranquiaListPanel extends JPanel {
                 tableModel.addRow(row);
             }
             
-            // Atualizar status
             if (franquias.isEmpty()) {
                 JOptionPane.showMessageDialog(this, 
                     "Nenhuma franquia encontrada.", 
@@ -211,7 +202,6 @@ public class FranquiaListPanel extends JPanel {
         }
     }
     
-    // Método público para recarregar dados
     public void atualizarLista() {
         loadData();
     }

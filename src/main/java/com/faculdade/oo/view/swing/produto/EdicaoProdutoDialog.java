@@ -32,7 +32,6 @@ public class EdicaoProdutoDialog extends JDialog {
     }
     
     private void initializeComponents() {
-        // Campos com styling melhorado
         Font fieldFont = new Font("Segoe UI", Font.PLAIN, 12);
         
         txtNome = new JTextField(20);
@@ -70,7 +69,6 @@ public class EdicaoProdutoDialog extends JDialog {
             BorderFactory.createEmptyBorder(8, 10, 8, 10)
         ));
         
-        // Botões estilizados
         btnSalvar = new JButton("Salvar");
         btnSalvar.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnSalvar.setBackground(new Color(40, 167, 69));
@@ -93,7 +91,6 @@ public class EdicaoProdutoDialog extends JDialog {
         setBackground(Color.WHITE);
         ((JComponent) getContentPane()).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        // Panel principal com formulário estilizado
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBackground(Color.WHITE);
         panelFormulario.setBorder(BorderFactory.createCompoundBorder(
@@ -114,7 +111,6 @@ public class EdicaoProdutoDialog extends JDialog {
         
         Font labelFont = new Font("Segoe UI", Font.BOLD, 12);
         
-        // ID (somente leitura)
         gbc.gridx = 0; gbc.gridy = 0;
         JLabel lblIdLabel = new JLabel("ID:");
         lblIdLabel.setFont(labelFont);
@@ -126,7 +122,6 @@ public class EdicaoProdutoDialog extends JDialog {
         lblId.setForeground(new Color(0, 123, 255));
         panelFormulario.add(lblId, gbc);
         
-        // Nome
         gbc.gridx = 0; gbc.gridy = 1;
         JLabel lblNome = new JLabel("Nome:*");
         lblNome.setFont(labelFont);
@@ -135,7 +130,6 @@ public class EdicaoProdutoDialog extends JDialog {
         gbc.gridx = 1;
         panelFormulario.add(txtNome, gbc);
         
-        // Descrição
         gbc.gridx = 0; gbc.gridy = 2;
         JLabel lblDescricao = new JLabel("Descrição:*");
         lblDescricao.setFont(labelFont);
@@ -144,7 +138,6 @@ public class EdicaoProdutoDialog extends JDialog {
         gbc.gridx = 1;
         panelFormulario.add(txtDescricao, gbc);
         
-        // Preço
         gbc.gridx = 0; gbc.gridy = 3;
         JLabel lblPreco = new JLabel("Preço (R$):*");
         lblPreco.setFont(labelFont);
@@ -153,7 +146,6 @@ public class EdicaoProdutoDialog extends JDialog {
         gbc.gridx = 1;
         panelFormulario.add(txtPreco, gbc);
         
-        // Quantidade em Estoque
         gbc.gridx = 0; gbc.gridy = 4;
         JLabel lblQuantidade = new JLabel("Quantidade em Estoque:*");
         lblQuantidade.setFont(labelFont);
@@ -162,7 +154,6 @@ public class EdicaoProdutoDialog extends JDialog {
         gbc.gridx = 1;
         panelFormulario.add(txtQuantidadeEstoque, gbc);
         
-        // Estoque Mínimo
         gbc.gridx = 0; gbc.gridy = 5;
         JLabel lblEstoqueMin = new JLabel("Estoque Mínimo:*");
         lblEstoqueMin.setFont(labelFont);
@@ -171,7 +162,6 @@ public class EdicaoProdutoDialog extends JDialog {
         gbc.gridx = 1;
         panelFormulario.add(txtEstoqueMinimo, gbc);
         
-        // Panel de botões estilizado
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 15));
         panelBotoes.setBackground(new Color(248, 249, 250));
         panelBotoes.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(220, 220, 220)));
@@ -186,7 +176,6 @@ public class EdicaoProdutoDialog extends JDialog {
         btnSalvar.addActionListener(e -> salvarAlteracoes());
         btnCancelar.addActionListener(e -> dispose());
         
-        // Enter para salvar, Escape para cancelar
         getRootPane().setDefaultButton(btnSalvar);
         
         KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke("ESCAPE");
@@ -209,7 +198,6 @@ public class EdicaoProdutoDialog extends JDialog {
     
     private void salvarAlteracoes() {
         try {
-            // Validar campos
             String nome = txtNome.getText().trim();
             String descricao = txtDescricao.getText().trim();
             String precoStr = txtPreco.getText().trim();
@@ -232,7 +220,6 @@ public class EdicaoProdutoDialog extends JDialog {
                 throw new IllegalArgumentException("Estoque mínimo é obrigatório");
             }
             
-            // Converter valores numéricos
             double preco;
             int quantidadeEstoque;
             int estoqueMinimo;
@@ -263,8 +250,7 @@ public class EdicaoProdutoDialog extends JDialog {
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Estoque mínimo deve ser um número inteiro");
             }
-            
-            // Atualizar produto
+        
             sistemaController.atualizarProduto(produto.getId(), nome, descricao, preco, quantidadeEstoque, estoqueMinimo);
             
             JOptionPane.showMessageDialog(this, 

@@ -1,22 +1,17 @@
 package com.faculdade.oo.view.swing.gerente;
 
-import com.mycompany.trabalho03oo.controller.SistemaController;
-import com.mycompany.trabalho03oo.model.Gerente;
+import com.faculdade.oo.controller.SistemaController;
+import com.faculdade.oo.model.Gerente;
 
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Dialog para editar gerentes
- * @author 84398
- */
 public class EdicaoGerenteDialog extends JDialog {
     
     private SistemaController sistemaController;
     private Gerente gerente;
     private boolean gerenteEditado = false;
     
-    // Campos do formulário
     private JTextField nomeField;
     private JTextField emailField;
     private JTextField cpfField;
@@ -37,11 +32,10 @@ public class EdicaoGerenteDialog extends JDialog {
         setLocationRelativeTo(getParent());
         setResizable(false);
         
-        // Campos do formulário
         nomeField = new JTextField(20);
         emailField = new JTextField(20);
         cpfField = new JTextField(15);
-        cpfField.setEditable(false); // CPF não pode ser alterado
+        cpfField.setEditable(false); 
         senhaField = new JPasswordField(15);
     }
     
@@ -55,19 +49,16 @@ public class EdicaoGerenteDialog extends JDialog {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         
-        // Nome
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Nome:"), gbc);
         gbc.gridx = 1;
         formPanel.add(nomeField, gbc);
         
-        // Email
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Email:"), gbc);
         gbc.gridx = 1;
         formPanel.add(emailField, gbc);
         
-        // CPF (somente leitura)
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("CPF:"), gbc);
         gbc.gridx = 1;
@@ -76,7 +67,6 @@ public class EdicaoGerenteDialog extends JDialog {
         cpfPanel.add(new JLabel(" (não editável)"));
         formPanel.add(cpfPanel, gbc);
         
-        // Senha
         gbc.gridx = 0; gbc.gridy = 3;
         formPanel.add(new JLabel("Nova Senha:"), gbc);
         gbc.gridx = 1;
@@ -87,7 +77,6 @@ public class EdicaoGerenteDialog extends JDialog {
         
         add(formPanel, BorderLayout.CENTER);
         
-        // Botões
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton salvarButton = new JButton("Salvar");
         JButton cancelarButton = new JButton("Cancelar");
@@ -99,7 +88,6 @@ public class EdicaoGerenteDialog extends JDialog {
     }
     
     private void setupEventListeners() {
-        // Buscar os botões
         JPanel buttonPanel = (JPanel) getContentPane().getComponent(1);
         JButton salvarButton = (JButton) buttonPanel.getComponent(0);
         JButton cancelarButton = (JButton) buttonPanel.getComponent(1);
@@ -117,7 +105,6 @@ public class EdicaoGerenteDialog extends JDialog {
     
     private void salvarGerente() {
         try {
-            // Validar campos obrigatórios
             if (!validarCampos()) {
                 return;
             }
@@ -126,7 +113,6 @@ public class EdicaoGerenteDialog extends JDialog {
             String email = emailField.getText().trim();
             String novaSenha = new String(senhaField.getPassword()).trim();
             
-            // Se a senha estiver vazia, manter a atual
             if (novaSenha.isEmpty()) {
                 novaSenha = null;
             }
@@ -161,7 +147,6 @@ public class EdicaoGerenteDialog extends JDialog {
             return false;
         }
         
-        // Validar formato do email
         String email = emailField.getText().trim();
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             JOptionPane.showMessageDialog(this, "Email inválido.", "Campo Inválido", JOptionPane.WARNING_MESSAGE);
