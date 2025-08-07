@@ -1,7 +1,7 @@
 ﻿/*
- * Giovana Maieli da Concei��o Livramento - 202365172A
+ * Giovana Maieli da Conceicao Livramento - 202365172A
  * Esthefany Emmanuele Silva Carvalho - 202365500B
- * �AAurea Cunha Prado - 202365062AC
+ * Aurea Cunha Prado - 202365062AC
  */
 package com.faculdade.oo.view.swing.produto;
 
@@ -10,7 +10,6 @@ import com.faculdade.oo.controller.SistemaController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CadastroProdutoDialog extends JDialog {
     
@@ -48,99 +47,40 @@ public class CadastroProdutoDialog extends JDialog {
     private void setupLayout() {
         setLayout(new BorderLayout());
         
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(Color.WHITE);
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
-        
-        JPanel panelFormulario = new JPanel(new GridBagLayout());
-        panelFormulario.setBackground(Color.WHITE);
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
         
-        Font labelFont = new Font("Segoe UI", Font.PLAIN, 13);
-        Color labelColor = new Color(70, 70, 70);
+        JLabel titleLabel = new JLabel("Cadastrar Produto");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        mainPanel.add(titleLabel, gbc);
         
-        gbc.gridx = 0; gbc.gridy = 0;
-        JLabel lblNome = new JLabel("Nome:*");
-        lblNome.setFont(labelFont);
-        lblNome.setForeground(labelColor);
-        panelFormulario.add(lblNome, gbc);
-        gbc.gridx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        panelFormulario.add(txtNome, gbc);
-        
-        gbc.gridx = 0; gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0;
-        JLabel lblDescricao = new JLabel("Descrição:*");
-        lblDescricao.setFont(labelFont);
-        lblDescricao.setForeground(labelColor);
-        panelFormulario.add(lblDescricao, gbc);
-        gbc.gridx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        panelFormulario.add(txtDescricao, gbc);
-        
-        gbc.gridx = 0; gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0;
-        JLabel lblPreco = new JLabel("Preço (R$):*");
-        lblPreco.setFont(labelFont);
-        lblPreco.setForeground(labelColor);
-        panelFormulario.add(lblPreco, gbc);
-        gbc.gridx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        panelFormulario.add(txtPreco, gbc);
-        
-        gbc.gridx = 0; gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0;
-        JLabel lblQuantidade = new JLabel("Quantidade em Estoque:*");
-        lblQuantidade.setFont(labelFont);
-        lblQuantidade.setForeground(labelColor);
-        panelFormulario.add(lblQuantidade, gbc);
-        gbc.gridx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        panelFormulario.add(txtQuantidadeEstoque, gbc);
-        
-        gbc.gridx = 0; gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 0;
-        JLabel lblEstoqueMin = new JLabel("Estoque Mínimo:*");
-        lblEstoqueMin.setFont(labelFont);
-        lblEstoqueMin.setForeground(labelColor);
-        panelFormulario.add(lblEstoqueMin, gbc);
-        gbc.gridx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        panelFormulario.add(txtEstoqueMinimo, gbc);
-        
-        JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
-        panelBotoes.setBackground(Color.WHITE);
-        panelBotoes.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        panelBotoes.add(btnSalvar);
-        panelBotoes.add(btnCancelar);
-        
-        mainPanel.add(panelFormulario, BorderLayout.CENTER);
-        mainPanel.add(panelBotoes, BorderLayout.SOUTH);
+        gbc.gridwidth = 1;
+        addFormField(mainPanel, gbc, 1, "Nome:", txtNome);
+        addFormField(mainPanel, gbc, 2, "Descrição:", txtDescricao);
+        addFormField(mainPanel, gbc, 3, "Preço (R$):", txtPreco);
+        addFormField(mainPanel, gbc, 4, "Quantidade em Estoque:", txtQuantidadeEstoque);
+        addFormField(mainPanel, gbc, 5, "Estoque Mínimo:", txtEstoqueMinimo);
         
         add(mainPanel, BorderLayout.CENTER);
         
-        JPanel panelHeader = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panelHeader.setBackground(new Color(248, 249, 250));
-        panelHeader.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)),
-            BorderFactory.createEmptyBorder(12, 20, 12, 20)
-        ));
-        JLabel lblLegenda = new JLabel("* Campos obrigatórios");
-        lblLegenda.setFont(new Font("Segoe UI", Font.ITALIC, 11));
-        lblLegenda.setForeground(new Color(108, 117, 125));
-        panelHeader.add(lblLegenda);
-        add(panelHeader, BorderLayout.NORTH);
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(btnSalvar);
+        buttonPanel.add(btnCancelar);
+        
+        add(buttonPanel, BorderLayout.SOUTH);
+    }
+    
+    private void addFormField(JPanel panel, GridBagConstraints gbc, int row, String labelText, JComponent field) {
+        gbc.gridx = 0; gbc.gridy = row;
+        panel.add(new JLabel(labelText), gbc);
+        
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(field, gbc);
+        gbc.fill = GridBagConstraints.NONE;
     }
     
     private void setupListeners() {
@@ -217,19 +157,13 @@ public class CadastroProdutoDialog extends JDialog {
             
             sistemaController.cadastrarProduto(nome, descricao, preco, quantidadeEstoque, estoqueMinimo, franquiaId);
             
-            JOptionPane.showMessageDialog(this, 
-                "Produto cadastrado com sucesso!", 
-                "Sucesso", 
-                JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
             
             produtoCadastrado = true;
             dispose();
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Erro ao cadastrar produto: " + e.getMessage(), 
-                "Erro", 
-                JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar produto: " + e.getMessage());
         }
     }
     
