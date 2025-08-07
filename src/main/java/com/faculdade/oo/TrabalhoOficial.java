@@ -1,3 +1,8 @@
+﻿/*
+ * Giovana Maieli da Conceição Livramento - 202365172A
+ * Esthefany Emmanuele Silva Carvalho - 202365500B
+ * ÁAAurea Cunha Prado - 202365062AC
+ */
 package com.faculdade.oo;
 
 import javax.swing.SwingUtilities;
@@ -34,3 +39,5 @@ public class TrabalhoOficial {
         }
     }
 }
+
+
