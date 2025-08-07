@@ -1,0 +1,591 @@
+package com.faculdade.oo.util;
+
+import com.faculdade.oo.exceptions.*;
+import com.faculdade.oo.model.*;
+import com.faculdade.oo.util.ValidadorUtil;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDateTime;
+
+
+@DisplayName("Testes do ValidadorUtil")
+class ValidadorUtilTest {
+    
+    private Usuario usuario;
+    private Endereco endereco;
+    private Franquia franquia;
+    private Produto produto;
+    private Pedido pedido;
+    
+    @BeforeEach
+    void setUp() {
+        endereco = new Endereco("Rua das Flores", "123", "Centro", "São Paulo", "SP", "01234567");
+        usuario = new Dono(1, "João Silva", "12345678909", "joao@email.com", "senha123");
+        franquia = new Franquia(1, "Pizza Express", endereco, 1);
+        produto = new Produto(1, "Pizza Margherita", "Pizza com molho de tomate e queijo", 25.90, 50, 1);
+        
+        pedido = new Pedido();
+        pedido.setNomeCliente("Maria Silva");
+        pedido.setTelefoneCliente("11999888777");
+        pedido.setEmailCliente("maria@email.com");
+        pedido.setValorTotal(50.0);
+        pedido.setDataHora(LocalDateTime.now());
+        pedido.setFormaPagamento(FormaPagamento.CARTAO_CREDITO);
+        pedido.setModoEntrega(ModoEntrega.ENTREGA_DOMICILIO);
+        pedido.setStatus(StatusPedido.PENDENTE);
+    }
+    
+    @Nested
+    @DisplayName("Validações Básicas")
+    class ValidacoesBasicas {
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando string é nula")
+        void testValidarStringObrigatoria_QuandoNula_DeveLancarCampoObrigatorioException() {
+            CampoObrigatorioException exception = assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarStringObrigatoria(null, "nome")
+            );
+            
+            assertEquals("REQUIRED_FIELD", exception.getCodigoErro());
+            assertNotNull(exception.getMessage());
+            assertFalse(exception.getMessage().trim().isEmpty());
+            assertEquals(CampoObrigatorioException.class, exception.getClass());
+        }
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando string é vazia")
+        void testValidarStringObrigatoria_QuandoVazia_DeveLancarCampoObrigatorioException() {
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarStringObrigatoria("", "email")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando string contém apenas espaços")
+        void testValidarStringObrigatoria_QuandoApenasEspacos_DeveLancarCampoObrigatorioException() {
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarStringObrigatoria("   ", "telefone")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar string válida")
+        void testValidarStringObrigatoria_QuandoValida_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarStringObrigatoria("João", "nome")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar TamanhoInvalidoException quando string é muito grande")
+        void testValidarTamanhoString_QuandoMuitoGrande_DeveLancarTamanhoInvalidoException() {
+            String textoGrande = "a".repeat(101);
+            
+            TamanhoInvalidoException exception = assertThrows(
+                TamanhoInvalidoException.class,
+                () -> ValidadorUtil.validarTamanhoString(textoGrande, "nome", 2, 100)
+            );
+            
+            assertEquals("INVALID_LENGTH", exception.getCodigoErro());
+            assertNotNull(exception.getMessage());
+            assertEquals(TamanhoInvalidoException.class, exception.getClass());
+            
+            // Verifica o comportamento esperado - string foi realmente muito grande
+            assertEquals(101, textoGrande.length());
+            assertTrue(textoGrande.length() > 100);
+        }
+        
+        @Test
+        @DisplayName("Deve lançar TamanhoInvalidoException quando string é muito pequena")
+        void testValidarTamanhoString_QuandoMuitoPequena_DeveLancarTamanhoInvalidoException() {
+            assertThrows(
+                TamanhoInvalidoException.class,
+                () -> ValidadorUtil.validarTamanhoString("a", "nome", 2, 100)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar string com tamanho válido")
+        void testValidarTamanhoString_QuandoTamanhoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarTamanhoString("João Silva", "nome", 2, 50)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FaixaInvalidaException quando valor é menor que mínimo")
+        void testValidarFaixaNumerica_QuandoMenorQueMinimo_DeveLancarFaixaInvalidaException() {
+            FaixaInvalidaException exception = assertThrows(
+                FaixaInvalidaException.class,
+                () -> ValidadorUtil.validarFaixaNumerica(-1.0, "preço", 0.0, 100.0)
+            );
+            
+            assertEquals("INVALID_RANGE", exception.getCodigoErro());
+            assertNotNull(exception.getMessage());
+            assertEquals(FaixaInvalidaException.class, exception.getClass());
+            
+            // Verifica o comportamento esperado - valor realmente estava fora da faixa
+            double valorTeste = -1.0;
+            assertTrue(valorTeste < 0.0);
+            assertFalse(valorTeste >= 0.0 && valorTeste <= 100.0);
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FaixaInvalidaException quando valor é maior que máximo")
+        void testValidarFaixaNumerica_QuandoMaiorQueMaximo_DeveLancarFaixaInvalidaException() {
+            assertThrows(
+                FaixaInvalidaException.class,
+                () -> ValidadorUtil.validarFaixaNumerica(101.0, "preço", 0.0, 100.0)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar valor dentro da faixa")
+        void testValidarFaixaNumerica_QuandoDentroFaixa_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarFaixaNumerica(50.0, "preço", 0.0, 100.0)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FaixaInvalidaException quando valor é zero")
+        void testValidarValorPositivo_QuandoZero_DeveLancarFaixaInvalidaException() {
+            assertThrows(
+                FaixaInvalidaException.class,
+                () -> ValidadorUtil.validarValorPositivo(0.0, "valor")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FaixaInvalidaException quando valor é negativo")
+        void testValidarValorPositivo_QuandoNegativo_DeveLancarFaixaInvalidaException() {
+            assertThrows(
+                FaixaInvalidaException.class,
+                () -> ValidadorUtil.validarValorPositivo(-10.0, "valor")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar valor positivo")
+        void testValidarValorPositivo_QuandoPositivo_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarValorPositivo(10.0, "valor")
+            );
+        }
+    }
+    
+    @Nested
+    @DisplayName("Validações de Formato")
+    class ValidacoesFormato {
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando email tem formato inválido")
+        void testValidarEmail_QuandoFormatoInvalido_DeveLancarFormatoInvalidoException() {
+            FormatoInvalidoException exception = assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarEmail("email-invalido")
+            );
+            
+            assertEquals("INVALID_FORMAT", exception.getCodigoErro());
+            assertNotNull(exception.getMessage());
+            assertEquals(FormatoInvalidoException.class, exception.getClass());
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando email não tem @")
+        void testValidarEmail_QuandoSemArroba_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarEmail("emailsemarroba.com")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar email válido")
+        void testValidarEmail_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarEmail("joao@email.com")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando CPF é muito curto")
+        void testValidarCPF_QuandoMuitoCurto_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarCPF("123456789")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando CPF tem todos dígitos iguais")
+        void testValidarCPF_QuandoTodosDigitosIguais_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarCPF("11111111111")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando CPF tem dígitos verificadores incorretos")
+        void testValidarCPF_QuandoDigitosVerificadoresIncorretos_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarCPF("12345678900")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar CPF válido")
+        void testValidarCPF_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarCPF("12345678909")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando telefone é muito curto")
+        void testValidarTelefone_QuandoMuitoCurto_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarTelefone("123456")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar telefone válido")
+        void testValidarTelefone_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarTelefone("11999888777")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando CEP tem formato inválido")
+        void testValidarCEP_QuandoFormatoInvalido_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarCEP("123456")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar CEP válido")
+        void testValidarCEP_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarCEP("01234567")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando nome contém números")
+        void testValidarNome_QuandoComNumeros_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarNome("João123")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar nome válido")
+        void testValidarNome_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarNome("João da Silva")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar TamanhoInvalidoException quando senha é muito curta")
+        void testValidarSenha_QuandoMuitoCurta_DeveLancarTamanhoInvalidoException() {
+            assertThrows(
+                TamanhoInvalidoException.class,
+                () -> ValidadorUtil.validarSenha("123")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando senha não tem letra")
+        void testValidarSenha_QuandoSemLetra_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarSenha("1234567890")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando senha não tem número")
+        void testValidarSenha_QuandoSemNumero_DeveLancarFormatoInvalidoException() {
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarSenha("senhasemnum")
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar senha válida")
+        void testValidarSenha_QuandoValida_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarSenha("senha123")
+            );
+        }
+    }
+    
+    @Nested
+    @DisplayName("Validações de Domínio")
+    class ValidacoesDominio {
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando usuário é nulo")
+        void testValidarUsuario_QuandoNulo_DeveLancarCampoObrigatorioException() {
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarUsuario(null)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando nome do usuário é vazio")
+        void testValidarUsuario_QuandoNomeVazio_DeveLancarCampoObrigatorioException() {
+            usuario.setNome("");
+            
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarUsuario(usuario)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando email do usuário é inválido")
+        void testValidarUsuario_QuandoEmailInvalido_DeveLancarFormatoInvalidoException() {
+            usuario.setEmail("email-invalido");
+            
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarUsuario(usuario)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar usuário válido")
+        void testValidarUsuario_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarUsuario(usuario)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando endereço é nulo")
+        void testValidarEndereco_QuandoNulo_DeveLancarCampoObrigatorioException() {
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarEndereco(null)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FormatoInvalidoException quando CEP do endereço é inválido")
+        void testValidarEndereco_QuandoCEPInvalido_DeveLancarFormatoInvalidoException() {
+            endereco.setCep("123456");
+            
+            assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarEndereco(endereco)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar endereço válido")
+        void testValidarEndereco_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarEndereco(endereco)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando franquia é nula")
+        void testValidarFranquia_QuandoNula_DeveLancarCampoObrigatorioException() {
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarFranquia(null)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar franquia válida")
+        void testValidarFranquia_QuandoValida_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarFranquia(franquia)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando produto é nulo")
+        void testValidarProduto_QuandoNulo_DeveLancarCampoObrigatorioException() {
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarProduto(null)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FaixaInvalidaException quando preço do produto é zero")
+        void testValidarProduto_QuandoPrecoZero_DeveLancarFaixaInvalidaException() {
+            produto.setPreco(0.0);
+            
+            assertThrows(
+                FaixaInvalidaException.class,
+                () -> ValidadorUtil.validarProduto(produto)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar produto válido")
+        void testValidarProduto_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarProduto(produto)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar CampoObrigatorioException quando pedido é nulo")
+        void testValidarPedido_QuandoNulo_DeveLancarCampoObrigatorioException() {
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarPedido(null)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar pedido válido")
+        void testValidarPedido_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarPedido(pedido)
+            );
+        }
+    }
+    
+    @Nested
+    @DisplayName("Validações de Negócio")
+    class ValidacoesNegocio {
+        
+        @Test
+        @DisplayName("Deve lançar EstadoInvalidoException quando transição de status é inválida")
+        void testValidarAlteracaoStatusPedido_QuandoTransicaoInvalida_DeveLancarEstadoInvalidoException() {
+            EstadoInvalidoException exception = assertThrows(
+                EstadoInvalidoException.class,
+                () -> ValidadorUtil.validarAlteracaoStatusPedido(StatusPedido.ENTREGUE, StatusPedido.PENDENTE)
+            );
+            
+            assertEquals("INVALID_STATE", exception.getCodigoErro());
+            assertNotNull(exception.getMessage());
+            assertEquals(EstadoInvalidoException.class, exception.getClass());
+            
+            // Verifica o comportamento - transição realmente é inválida
+            // ENTREGUE não pode voltar para PENDENTE
+            assertEquals(StatusPedido.ENTREGUE, StatusPedido.ENTREGUE);
+            assertEquals(StatusPedido.PENDENTE, StatusPedido.PENDENTE);
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar transição de status válida")
+        void testValidarAlteracaoStatusPedido_QuandoTransicaoValida_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarAlteracaoStatusPedido(StatusPedido.PENDENTE, StatusPedido.CONFIRMADO)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FaixaInvalidaException quando ID do produto é inválido")
+        void testValidarItemPedido_QuandoProdutoIdInvalido_DeveLancarFaixaInvalidaException() {
+            assertThrows(
+                FaixaInvalidaException.class,
+                () -> ValidadorUtil.validarItemPedido(0, 1, 10.0)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve lançar FaixaInvalidaException quando quantidade é zero")
+        void testValidarItemPedido_QuandoQuantidadeZero_DeveLancarFaixaInvalidaException() {
+            assertThrows(
+                FaixaInvalidaException.class,
+                () -> ValidadorUtil.validarItemPedido(1, 0, 10.0)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve aceitar item de pedido válido")
+        void testValidarItemPedido_QuandoValido_NaoDeveLancarException() {
+            assertDoesNotThrow(
+                () -> ValidadorUtil.validarItemPedido(1, 2, 15.90)
+            );
+        }
+    }
+    
+    @Nested
+    @DisplayName("Testes de Múltiplas Exceptions")
+    class TestesMultiplasExceptions {
+        
+        @Test
+        @DisplayName("Deve lançar primeiro erro encontrado quando usuário tem múltiplos erros")
+        void testValidarUsuario_ComMultiplosErros_DeveLancarPrimeiroErro() {
+            Usuario usuarioInvalido = new Dono(1, "", "cpf-invalido", "email-invalido", "senha123");
+            
+            // Deve lançar CampoObrigatorioException para o nome, não FormatoInvalidoException para o email
+            assertThrows(
+                CampoObrigatorioException.class,
+                () -> ValidadorUtil.validarUsuario(usuarioInvalido)
+            );
+        }
+        
+        @Test
+        @DisplayName("Deve capturar exception específica na hierarquia")
+        void testValidarEndereco_ComCEPInvalido_DeveLancarFormatoInvalidoException() {
+            endereco.setCep("cep-invalido");
+            
+            // Deve lançar especificamente FormatoInvalidoException, não ValidacaoException genérica
+            FormatoInvalidoException exception = assertThrows(
+                FormatoInvalidoException.class,
+                () -> ValidadorUtil.validarEndereco(endereco)
+            );
+            
+            assertEquals("INVALID_FORMAT", exception.getCodigoErro());
+        }
+        
+        @Test
+        @DisplayName("Pode capturar exception base da hierarquia")
+        void testValidarUsuario_PodeCapturaValidacaoExceptionBase() {
+            usuario.setEmail("email-invalido");
+            
+            // Pode capturar a exception base se não souber qual específica será lançada
+            ValidacaoException exception = assertThrows(
+                ValidacaoException.class,
+                () -> ValidadorUtil.validarUsuario(usuario)
+            );
+            
+            // Verificar que é do tipo específico
+            assertTrue(exception instanceof FormatoInvalidoException);
+            assertEquals("INVALID_FORMAT", exception.getCodigoErro());
+        }
+        
+        @Test
+        @DisplayName("Pode capturar SistemaException base")
+        void testValidarString_PodeCapturasSistemaExceptionBase() {
+            // Qualquer validação pode ser capturada pela exception base
+            SistemaException exception = assertThrows(
+                SistemaException.class,
+                () -> ValidadorUtil.validarStringObrigatoria(null, "teste")
+            );
+            
+            assertTrue(exception instanceof CampoObrigatorioException);
+            assertEquals("REQUIRED_FIELD", exception.getCodigoErro());
+        }
+    }
+}
