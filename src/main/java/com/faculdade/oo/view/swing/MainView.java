@@ -3,6 +3,14 @@ package com.faculdade.oo.view.swing;
 import com.faculdade.oo.controller.AutenticacaoController;
 import com.faculdade.oo.controller.SistemaController;
 import com.faculdade.oo.model.*;
+import com.faculdade.oo.view.swing.franquia.*;
+import com.faculdade.oo.view.swing.gerente.*;
+import com.faculdade.oo.view.swing.vendedor.*;
+import com.faculdade.oo.view.swing.produto.*;
+import com.faculdade.oo.view.swing.pedido.*;
+import com.faculdade.oo.view.swing.item.*;
+
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -679,7 +687,7 @@ public class MainView extends JFrame {
     }
     
     private void mostrarNovoPedido() {
-        NovoPedidoDialogSimples dialog = new NovoPedidoDialogSimples(this, sistemaController);
+        NovoPedidoDialog dialog = new NovoPedidoDialog(this, sistemaController);
         dialog.setVisible(true);
     }
     

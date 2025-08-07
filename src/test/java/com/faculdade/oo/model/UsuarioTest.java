@@ -1,6 +1,5 @@
 package com.faculdade.oo.model;
 
-import com.faculdade.oo.model.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -91,7 +90,6 @@ class UsuarioTest {
             Usuario usuario2 = new Dono(2, "Maria", "98765432100", "maria@email.com", "senha456");
             Usuario usuario3 = new Dono(1, "Pedro", "11111111111", "pedro@email.com", "senha789");
             
-            // Mesmo objeto
             assertTrue(usuario1.equals(usuario1));
             
             assertFalse(usuario1.equals(usuario2));

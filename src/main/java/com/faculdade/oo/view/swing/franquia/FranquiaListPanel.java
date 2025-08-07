@@ -2,6 +2,7 @@ package com.faculdade.oo.view.swing.franquia;
 
 import com.faculdade.oo.controller.SistemaController;
 import com.faculdade.oo.model.Franquia;
+import com.faculdade.oo.view.swing.MainView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

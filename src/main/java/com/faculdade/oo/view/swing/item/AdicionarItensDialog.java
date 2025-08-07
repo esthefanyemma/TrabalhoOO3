@@ -2,6 +2,7 @@ package com.faculdade.oo.view.swing.item;
 
 import com.faculdade.oo.controller.SistemaController;
 import com.faculdade.oo.model.*;
+import com.faculdade.oo.model.Vendedor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,8 +23,7 @@ public class AdicionarItensDialog extends JDialog {
     private JButton btnAdicionar, btnFechar;
     private JLabel lblPedidoInfo;
     
-    public AdicionarItensDialogSimples(JFrame parent, SistemaController sistemaController, 
-                               int pedidoId, String nomeCliente) {
+    public AdicionarItensDialog(JFrame parent, SistemaController sistemaController, int pedidoId, String nomeCliente) {
         super(parent, "Adicionar Itens ao Pedido", true);
         this.sistemaController = sistemaController;
         this.pedidoId = pedidoId;

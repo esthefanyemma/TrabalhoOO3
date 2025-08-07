@@ -19,7 +19,7 @@ public class NovoPedidoDialog extends JDialog {
     private JTextArea txtObservacoes;
     private JButton btnCriar, btnCancelar;
     
-    public NovoPedidoDialogSimples(JFrame parent, SistemaController sistemaController) {
+    public NovoPedidoDialog(JFrame parent, SistemaController sistemaController) {
         super(parent, "Novo Pedido", true);
         this.sistemaController = sistemaController;
         

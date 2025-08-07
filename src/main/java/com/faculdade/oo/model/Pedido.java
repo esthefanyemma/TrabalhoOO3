@@ -12,11 +12,11 @@ public class Pedido {
     private String emailCliente;
     private Endereco enderecoEntrega;
     private LocalDateTime dataHora;
-    private LocalDateTime dataPedido; // Alias para dataHora para compatibilidade com DAO
+    private LocalDateTime dataPedido;
     private List<ItemPedido> itens;
     private FormaPagamento formaPagamento;
     private ModalidadeEntrega modalidadeEntrega;
-    private ModoEntrega modoEntrega; // Alias para modalidadeEntrega
+    private ModoEntrega modoEntrega;
     private StatusPedido status;
     private double taxaEntrega;
     private double taxaServico;

@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.faculdade.oo.controller.SistemaController;
 import com.faculdade.oo.model.Vendedor;
+import com.faculdade.oo.view.swing.MainView;
 
 public class VendedorListPanel extends JPanel {
     

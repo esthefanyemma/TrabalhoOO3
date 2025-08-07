@@ -1,4 +1,4 @@
-package com.faculdade.oo.view.swing;
+package com.faculdade.oo.view.swing.produto;
 
 import com.faculdade.oo.controller.SistemaController;
 
@@ -36,7 +36,7 @@ public class CadastroProdutoDialog extends JDialog {
         txtQuantidadeEstoque = new JTextField(10);
         txtEstoqueMinimo = new JTextField(10);
         
-=        btnSalvar = new JButton("Salvar");
+        btnSalvar = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
     }
     

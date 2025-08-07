@@ -50,7 +50,6 @@ public class Franquia {
     public int getTotalPedidos() { return totalPedidos; }
     public void setTotalPedidos(int totalPedidos) { this.totalPedidos = totalPedidos; }
     
-    // Métodos de negócio
     public void adicionarVendedor(int vendedorId) {
         if (!vendedoresIds.contains(vendedorId)) {
             vendedoresIds.add(vendedorId);

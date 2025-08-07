@@ -2,6 +2,7 @@ package com.faculdade.oo.view.swing.pedido;
 
 import com.faculdade.oo.controller.SistemaController;
 import com.faculdade.oo.model.*;
+import com.faculdade.oo.view.swing.item.AdicionarItensDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -187,7 +188,7 @@ public class MeusPedidosPanel extends JPanel {
     }
     
     private void criarNovoPedido() {
-        NovoPedidoDialogSimples dialog = new NovoPedidoDialogSimples(
+        NovoPedidoDialog dialog = new NovoPedidoDialog(
             (JFrame) SwingUtilities.getWindowAncestor(this), 
             sistemaController
         );
@@ -226,7 +227,7 @@ public class MeusPedidosPanel extends JPanel {
         int pedidoId = (Integer) modeloTabela.getValueAt(linhaSelecionada, 0);
         String nomeCliente = (String) modeloTabela.getValueAt(linhaSelecionada, 1);
         
-        AdicionarItensDialogSimples dialog = new AdicionarItensDialogSimples(
+        AdicionarItensDialog dialog = new AdicionarItensDialog(
             (JFrame) SwingUtilities.getWindowAncestor(this), 
             sistemaController, 
             pedidoId, 
