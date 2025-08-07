@@ -1,8 +1,5 @@
 package com.faculdade.oo;
 
-/**
- * Classe principal do projeto Trabalho OO 3
- */
 public class Main {
     
     public static void main(String[] args) {
