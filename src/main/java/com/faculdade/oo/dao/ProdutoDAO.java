@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ProdutoDAO implements GenericDAO<Produto> {
     
-    private static final String ARQUIVO_PRODUTOS = "produtos.txt";
+    private static final String ARQUIVO_PRODUTOS = "data/produtos.txt";
     private static final String SEPARADOR = ";";
     
     @Override

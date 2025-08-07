@@ -11,8 +11,8 @@ import java.util.*;
 
 public class PedidoDAO implements GenericDAO<Pedido> {
     
-    private static final String ARQUIVO_PEDIDOS = "pedidos.txt";
-    private static final String ARQUIVO_ITENS = "itens_pedido.txt";
+    private static final String ARQUIVO_PEDIDOS = "data/pedidos.txt";
+    private static final String ARQUIVO_ITENS = "data/itens_pedido.txt";
     private static final String SEPARADOR = ";";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class FranquiaDAO implements GenericDAO<Franquia> {
     
-    private static final String ARQUIVO = "franquias.txt";
+    private static final String ARQUIVO = "data/franquias.txt";
     private static final String SEPARADOR = ";";
     private static final String SEPARADOR_LISTA = ",";
     

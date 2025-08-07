@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UsuarioDAO implements GenericDAO<Usuario> {
     
-    private static final String ARQUIVO_PADRAO = "usuarios.txt";
+    private static final String ARQUIVO_PADRAO = "data/usuarios.txt";
     private static final String SEPARADOR = ";";
     private String nomeArquivo;
     
